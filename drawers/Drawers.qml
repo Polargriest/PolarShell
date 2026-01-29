@@ -24,6 +24,8 @@ Variants {
         // que se atacha a los bordes de la pantalla).
 
         PanelWindow {
+            id: win
+
             // anclas del monitor. Poniendo todas en true es básicamente fullscreen. CUIDADO: Esto bloquea el
             // mouse, aunque sea transparente.
             anchors {
@@ -33,10 +35,11 @@ Variants {
                 right: true
             }
 
-            // esto soluciona el problema de arriba. Ahora la ventana completa será clicktrough.
+            // esto soluciona el problema de arriba. Ahora la ventana completa será clicktrough porque le decimos
+            // que la región clickeable sea una región vacía (0px por 0px)
             mask: Region {
-                width: width
-                height: height
+                width: win.width
+                height: bar.height
             }
 
             color: "transparent"
@@ -49,7 +52,9 @@ Variants {
                 screen: delegate.modelData
             }
 
-            Bar {}
+            BarWrapper {
+                id: bar
+            }
         }
     }
 }

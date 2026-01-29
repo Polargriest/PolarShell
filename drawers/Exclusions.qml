@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick
+import qs.globals
 
 Scope {
     id: root
@@ -13,9 +14,10 @@ Scope {
         }
 
         screen: root.screen
-        exclusiveZone: 100
+        exclusiveZone: Configs.bar.height
         mask: Region {}
         color: "transparent"
+
         implicitHeight: 1
         implicitWidth: 1
     }

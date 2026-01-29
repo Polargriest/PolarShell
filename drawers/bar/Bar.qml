@@ -3,8 +3,9 @@ import QtQuick.Layouts
 import qs.globals
 
 ColumnLayout {
-    implicitHeight: 100
-    implicitWidth: 100
-    
+    width: parent.width
+    height: Configs.bar.height + 15
+
+
     DebugRectangle {}
 }
