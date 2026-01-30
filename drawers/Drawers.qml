@@ -48,11 +48,15 @@ Variants {
                                                 // si lo quitas y tienes waybar abierto, Wayland acomodará Quickshell
                                                 // y te lo va a poner abajo de la waybar.
 
+            // Drawers también dibujará las partes que necesitamos que Hyprland excluya (que le aparte espacio). Esto lo
+            // que hace es hacer una venta vacía en la parte superior de la ventana.
             Exclusions {
                 screen: delegate.modelData
             }
 
-            BarWrapper {
+            // ------- WIDGETS DE LOS DRAWERS -------
+
+            Bar {
                 id: bar
             }
         }

@@ -14,11 +14,41 @@ Scope {
         }
 
         screen: root.screen
-        exclusiveZone: Configs.bar.height
+        exclusiveZone: Configs.bar.height + Configs.screen.gaps_out
         mask: Region {}
         color: "transparent"
+    }
 
-        implicitHeight: 1
-        implicitWidth: 1
+    PanelWindow {
+        anchors {
+            left: true
+        }
+
+        screen: root.screen
+        exclusiveZone: Configs.screen.gaps_out
+        mask: Region {}
+        color: "transparent"
+    }
+
+    PanelWindow {
+        anchors {
+            right: true
+        }
+
+        screen: root.screen
+        exclusiveZone: Configs.screen.gaps_out
+        mask: Region {}
+        color: "transparent"
+    }
+
+    PanelWindow {
+        anchors {
+            bottom: true
+        }
+
+        screen: root.screen
+        exclusiveZone: Configs.screen.gaps_out
+        mask: Region {}
+        color: "transparent"
     }
 }
