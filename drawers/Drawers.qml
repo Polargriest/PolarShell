@@ -35,12 +35,15 @@ Variants {
                 right: true
             }
 
-            // esto soluciona el problema de arriba. Ahora la ventana completa será clicktrough porque le decimos
-            // que la región clickeable sea una región vacía (0px por 0px)
-            // TODO: when you open a widget, it also create a mask there.
+            // this solves the problem on the previous comment. This makes so the only clickable region is
+            // a region that covers the whole bar.
             mask: Region {
                 width: win.width
                 height: bar.height
+
+                // also, the widgets on the bar sometimes opens panels. We need to add them to the mask to make them
+                // clickable.
+                regions: regions.instances
             }
 
             color: "transparent"
@@ -55,10 +58,57 @@ Variants {
                 screen: delegate.modelData
             }
 
-            // ------- WIDGETS DE LOS DRAWERS -------
+            // we will make as much regions as needed (i. e. for every opened panel)
+            Variants {
+                id: regions
 
+                model: bar.openedPanels
+
+                Region {
+                    required property Item modelData
+
+                    property var rect: win.contentItem.mapFromItem(modelData, 0, 0, modelData.width, modelData.height)
+
+                    x: rect.x
+                    y: rect.y
+                    width: rect.width
+                    height: rect.height
+                    intersection: Intersection.Combine
+                }
+            }
+
+            // ------- WIDGETS DE LOS DRAWERS -------
             Bar {
                 id: bar
+            }
+
+            Item {
+                anchors.fill: parent
+                z: 1000 // Ensure it's on top of everything
+                visible: false
+
+                MouseArea {
+                    id: debugMouse
+                    anchors.fill: parent
+                    hoverEnabled: true // Necessary to track position without clicking
+                }
+
+                Rectangle {
+                    x: debugMouse.mouseX + 15
+                    y: debugMouse.mouseY + 15
+                    width: 100
+                    height: 40
+                    color: "black"
+                    opacity: 0.7
+                    radius: 5
+
+                    Text {
+                        anchors.centerIn: parent
+                        color: "white"
+                        font.family: "JetBrains Mono NFP"
+                        text: `X: ${Math.round(debugMouse.mouseX)} Y: ${Math.round(debugMouse.mouseY)}`
+                    }
+                }
             }
         }
     }

@@ -1,3 +1,4 @@
 .qmlls.ini
 DebugRectangle.qml
 DebugLayoutRectangle.qml
+qmldir

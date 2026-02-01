@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell
 import QtQuick.Layouts
 import qs.globals
 import "widgets" as Widgets
@@ -12,6 +13,9 @@ RowLayout {
     width: parent.width // toma todo el espacio vertical
     height: Configs.bar.height // toma el espacio que le dieron en la Config.
     spacing: 0
+
+    // really bad, but I don't know how to do it i'm so sorry and this is the only idea i had :sob:
+    property var openedPanels: [clock1, clock2]
 
     // widgets a la izquierda
 
@@ -29,6 +33,8 @@ RowLayout {
     // widgets a la derecha
 
     RowLayout {
+        id: right_widgets
+
         Layout.alignment: Qt.AlignRight | Qt.AlignTop
         spacing: 10
 
@@ -38,8 +44,8 @@ RowLayout {
 
         // ----- WIDGETS -----
 
-        Widgets.ClockWidget {}
-        Widgets.ClockWidget {}
+        Widgets.ClockWidget { id: clock1 }
+        Widgets.ClockWidget { id: clock2 }
     }
     
 }
