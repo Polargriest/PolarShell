@@ -11,6 +11,7 @@ import "widgets" as Widgets
 RowLayout {
     width: parent.width // toma todo el espacio vertical
     height: Configs.bar.height // toma el espacio que le dieron en la Config.
+    spacing: 0
 
     // widgets a la izquierda
 
@@ -28,7 +29,7 @@ RowLayout {
     // widgets a la derecha
 
     RowLayout {
-        Layout.alignment: Qt.AlignRight
+        Layout.alignment: Qt.AlignRight | Qt.AlignTop
         spacing: 10
 
         // dejamos de margen los pixeles que se nos indicaron en las configuraciones
@@ -37,6 +38,7 @@ RowLayout {
 
         // ----- WIDGETS -----
 
+        Widgets.ClockWidget {}
         Widgets.ClockWidget {}
     }
     

@@ -37,6 +37,7 @@ Variants {
 
             // esto soluciona el problema de arriba. Ahora la ventana completa será clicktrough porque le decimos
             // que la región clickeable sea una región vacía (0px por 0px)
+            // TODO: when you open a widget, it also create a mask there.
             mask: Region {
                 width: win.width
                 height: bar.height

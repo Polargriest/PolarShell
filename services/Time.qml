@@ -9,9 +9,7 @@ pragma Singleton
 
 Singleton {
     // en esta string guardamos la hora. Esta propiedad puede ser leída en otros lados (como en ClockWidget)
-    readonly property string time: {
-        Qt.formatDateTime(clock.date, "hh:mm AP")
-    }
+    readonly property string now: clock.date
 
     SystemClock {
         id: clock

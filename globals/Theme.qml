@@ -13,6 +13,8 @@ Singleton {
         readonly property color green: "#A9DC76"
         readonly property color blue: "#78DCE8"
         readonly property color purple: "#AB9DF2"
+
+        readonly property color text_color: "#B9B9B8" // text colors
     }
 
     // esta función devuelve uno de los colores del objeto colors con una opacidad definida
