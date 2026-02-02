@@ -6,7 +6,7 @@ pragma Singleton
 Singleton {
     // ---------- SCREEN CONFIGS ----------
     readonly property QtObject screen: QtObject {
-        // in Hyprland, size of the gap between the borders of the screen and the windows. This value is used
+        // in Hyprland, size of the gap between the edges of the screen and the windows. This value is used
         // to leave a margin bewtween the top of the screen and the bar.
         readonly property int gapsOut: 15
     }

@@ -14,19 +14,14 @@ RowLayout {
     height: Configs.bar.height // toma el espacio que le dieron en la Config.
     spacing: 0
 
-    // really bad, but I don't know how to do it i'm so sorry and this is the only idea i had :sob:
-    // TODO: make so openedPanels updates without hardcoding the widgets
+    // HACK: really bad, but I don't know how to do it i'm so sorry and this is the only idea i had :sob:
     property var openedPanels: [clock1, clock2]
 
     // widgets a la izquierda
 
     RowLayout {
-        Layout.alignment: Qt.AlignLeft
+        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
         spacing: 10
-
-        // dejamos de margen los pixeles que se nos indicaron en las configuraciones
-        Layout.topMargin: Configs.screen.gapsOut
-        Layout.leftMargin: Configs.screen.gapsOut
 
         // ----- WIDGETS -----
     }
@@ -39,12 +34,9 @@ RowLayout {
         Layout.alignment: Qt.AlignRight | Qt.AlignTop
         spacing: 10
 
-        // dejamos de margen los pixeles que se nos indicaron en las configuraciones
-        Layout.topMargin: Configs.screen.gapsOut
-        Layout.rightMargin: Configs.screen.gapsOut
-
         // ----- WIDGETS -----
 
+        // TODO: only one widget should be able to be open at a time.
         Widgets.ClockWidget { id: clock1 }
         Widgets.ClockWidget { id: clock2 }
     }

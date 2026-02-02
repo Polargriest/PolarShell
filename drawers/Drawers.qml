@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick
+import qs.globals
 import "bar"
 
 // queremos crear un Drawer para cada monitor. Para ello usaremos Variants.
@@ -77,8 +78,16 @@ Variants {
             }
 
             // ------- WIDGETS DE LOS DRAWERS -------
-            Bar {
-                id: bar
+            Item {
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                
+                anchors.topMargin: Configs.screen.gapsOut
+                anchors.leftMargin: Configs.screen.gapsOut
+                anchors.rightMargin: Configs.screen.gapsOut
+
+                Bar { id: bar }
             }
         }
     }
