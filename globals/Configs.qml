@@ -12,6 +12,8 @@ Singleton {
         readonly property int gaps_out: 15
     }
 
+
+
     // configuraciones de la barra
     readonly property QtObject bar: QtObject {
         // altura que Quickshell reservará para la barra.
@@ -19,6 +21,7 @@ Singleton {
 
         // time in ms that every bar widget takes to open/close
         readonly property int widgets_animations: 600
+
 
         // ---------- CLOCK WIDGET SETTINGS ----------
         readonly property QtObject clock_widget: QtObject {

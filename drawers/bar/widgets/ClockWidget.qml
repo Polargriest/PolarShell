@@ -12,12 +12,12 @@ pragma ComponentBehavior: Bound
 
 Rectangle {
     id: widget
+    clip: true
+
     property bool isOpen: false // wether if the clock is expanded or not.
 
     // layour alignments so it can expand correctly
     Layout.alignment: Qt.AlignTop
-    Layout.preferredWidth: isOpen ? expanded.width : collapsed.width
-    Layout.preferredHeight: isOpen ? expanded.height : collapsed.height
 
     // appearence
     color: Theme.colorWithAlpha(Theme.colors.bg, 0.6)
@@ -34,10 +34,11 @@ Rectangle {
         }
     }
 
-    // collapsed view: just show the clock in a pill
+    // ---------- COLLAPSED VIEW ----------
+    // pill with time
+
     Text {
-        // el texto lo agarramos usando el servicio de SystemTime. éste está guardado en un singleton guardado en
-        // services/Time.qml
+        // we grab the time using the SystemTime servece. its saved in a singleton in services/Time.qml
         text: Configs.bar.clock_widget.use_12hrs ? Qt.formatDateTime(Time.now, "hh:mm AP") : Qt.formatDateTime(Time.now, "hh:mm")
         id: collapsed
         
@@ -51,11 +52,10 @@ Rectangle {
         bottomPadding: 5
         rightPadding: 12
         leftPadding: 12
-
-        // TODO: animations
-        opacity: widget.isOpen ? 0 /* invisible if opened */ : 1 /* visible if opened*/
-        visible: opacity > 0
     }
+
+    // ---------- EXPANDED VIEW ----------
+    // pill with time, date and an integrated calendar.
 
     ColumnLayout {
         id: expanded
@@ -64,14 +64,17 @@ Rectangle {
             spacing: 1
 
             Text {
+                id: expanded_clock
                 text: Configs.bar.clock_widget.use_12hrs ? Qt.formatDateTime(Time.now, "hh:mm:ss AP") : Qt.formatDateTime(Time.now, "hh:mm:ss")
                 color: Theme.colors.blue
-                font.bold: true
                 font.pixelSize: 34
+                font.bold: true
                 font.family: "JetBrains Mono NFP"
             }
 
             Text {
+                id: expanded_date
+
                 // we want to format the date as "Saturday, 31st January 2026."
                 // TODO: this should only execute just when the widget its open.
                 text: {
@@ -93,8 +96,8 @@ Rectangle {
                     }
                 }
                 color: Theme.colors.text_color
-                font.bold: true
                 font.pixelSize: 18
+                font.bold: true
                 font.family: "JetBrains Mono NFP"
             }
 
@@ -104,23 +107,49 @@ Rectangle {
             Layout.bottomMargin: 25
         }
 
-        // TODO: animations
         opacity: widget.isOpen ? 1 /* invisible if opened */ : 0 /* visible if opened*/
         visible: opacity > 0
     }
 
-    // ----- animations ------
-    Behavior on Layout.preferredWidth {
-        NumberAnimation  {
-            duration: Configs.bar.widgets_animations
-            easing.type: Easing.OutBack
-        }
-    }
+    // ----- STATES & ANIMATIONS ------
+    state: isOpen ? "opened" : "closed"
 
-    Behavior on Layout.preferredHeight {
-        NumberAnimation  {
-            duration: Configs.bar.widgets_animations
-            easing.type: Easing.OutBack
+    states: [
+        State {
+            name: "opened"
+            PropertyChanges { widget.Layout.preferredWidth: expanded.implicitWidth }
+            PropertyChanges { widget.Layout.preferredHeight: expanded.implicitHeight }
+            PropertyChanges { collapsed.opacity: 0 }
+            PropertyChanges { expanded.opacity: 1 }
+        },
+        State {
+            name: "closed"
+            PropertyChanges { widget.Layout.preferredWidth: collapsed.implicitWidth }
+            PropertyChanges { widget.Layout.preferredHeight: collapsed.implicitHeight }
+            PropertyChanges { collapsed.opacity: 1 }
+            PropertyChanges { expanded.opacity: 0 }
         }
-    }
+    ]
+
+    transitions: [
+        Transition {
+            from: "closed"; to: "opened";
+
+            NumberAnimation {
+                properties: "widget.Layout.preferredWidth,widget.Layout.preferredHeight,expanded.opacity,collapsed.opacity"
+                duration: Configs.bar.widgets_animations
+                easing.type: Easing.OutBack
+            }
+        },
+
+        Transition {
+            from: "opened"; to: "closed";
+
+            NumberAnimation {
+                properties: "widget.Layout.preferredWidth,widget.Layout.preferredHeight,expanded.opacity,collapsed.opacity"
+                duration: Configs.bar.widgets_animations
+                easing.type: Easing.OutBack
+            }
+        }
+    ]
 }
