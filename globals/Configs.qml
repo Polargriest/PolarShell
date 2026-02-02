@@ -19,5 +19,11 @@ Singleton {
 
         // time in ms that every bar widget takes to open/close
         readonly property int widgets_animations: 600
+
+        // ---------- CLOCK WIDGET SETTINGS ----------
+        readonly property QtObject clock_widget: QtObject {
+            // by default, clock uses 12-hour format. if you want to use 24-hour, set this to false.
+            readonly property bool use_12hrs: true
+        }
     }
 }

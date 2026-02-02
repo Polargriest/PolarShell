@@ -38,7 +38,7 @@ Rectangle {
     Text {
         // el texto lo agarramos usando el servicio de SystemTime. éste está guardado en un singleton guardado en
         // services/Time.qml
-        text: Qt.formatDateTime(Time.now, "hh:mm AP")
+        text: Configs.bar.clock_widget.use_12hrs ? Qt.formatDateTime(Time.now, "hh:mm AP") : Qt.formatDateTime(Time.now, "hh:mm")
         id: collapsed
         
         color: Theme.colors.blue
@@ -46,6 +46,7 @@ Rectangle {
         font.pixelSize: 18
         font.family: "JetBrains Mono NFP"
 
+        anchors.centerIn: parent
         topPadding: 5
         bottomPadding: 5
         rightPadding: 12
@@ -63,7 +64,7 @@ Rectangle {
             spacing: 1
 
             Text {
-                text: Qt.formatDateTime(Time.now, "hh:mm:ss AP")
+                text: Configs.bar.clock_widget.use_12hrs ? Qt.formatDateTime(Time.now, "hh:mm:ss AP") : Qt.formatDateTime(Time.now, "hh:mm:ss")
                 color: Theme.colors.blue
                 font.bold: true
                 font.pixelSize: 34
@@ -112,14 +113,14 @@ Rectangle {
     Behavior on Layout.preferredWidth {
         NumberAnimation  {
             duration: Configs.bar.widgets_animations
-            easing.type:  Easing.OutBack
+            easing.type: Easing.OutBack
         }
     }
 
     Behavior on Layout.preferredHeight {
         NumberAnimation  {
             duration: Configs.bar.widgets_animations
-            easing.type:  Easing.OutBack
+            easing.type: Easing.OutBack
         }
     }
 }
