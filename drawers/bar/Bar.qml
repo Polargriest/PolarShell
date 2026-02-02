@@ -15,6 +15,7 @@ RowLayout {
     spacing: 0
 
     // really bad, but I don't know how to do it i'm so sorry and this is the only idea i had :sob:
+    // TODO: make so openedPanels updates without hardcoding the widgets
     property var openedPanels: [clock1, clock2]
 
     // widgets a la izquierda
@@ -24,8 +25,8 @@ RowLayout {
         spacing: 10
 
         // dejamos de margen los pixeles que se nos indicaron en las configuraciones
-        Layout.topMargin: Configs.screen.gaps_out
-        Layout.leftMargin: Configs.screen.gaps_out
+        Layout.topMargin: Configs.screen.gapsOut
+        Layout.leftMargin: Configs.screen.gapsOut
 
         // ----- WIDGETS -----
     }
@@ -39,8 +40,8 @@ RowLayout {
         spacing: 10
 
         // dejamos de margen los pixeles que se nos indicaron en las configuraciones
-        Layout.topMargin: Configs.screen.gaps_out
-        Layout.rightMargin: Configs.screen.gaps_out
+        Layout.topMargin: Configs.screen.gapsOut
+        Layout.rightMargin: Configs.screen.gapsOut
 
         // ----- WIDGETS -----
 

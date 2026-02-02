@@ -4,29 +4,25 @@ import QtQuick
 pragma Singleton
 
 Singleton {
-    // configuraciones de las ventanas
+    // ---------- SCREEN CONFIGS ----------
     readonly property QtObject screen: QtObject {
-        // Tamaño de los huecos que hay desde los bordes de la pantalla a las ventanas. Este dato está
-        // guardado en las configuraciones de Hyprland, y cambia cosas como el márgen que deja Hyprland
-        // entre la parte superior de la ventana a la barra.
-        readonly property int gaps_out: 15
+        // in Hyprland, size of the gap between the borders of the screen and the windows. This value is used
+        // to leave a margin bewtween the top of the screen and the bar.
+        readonly property int gapsOut: 15
     }
 
+    // -------------------------------------------------------------------
 
-
-    // configuraciones de la barra
+    // ---------- BAR CONFIGS ----------
     readonly property QtObject bar: QtObject {
-        // altura que Quickshell reservará para la barra.
-        readonly property int height: 50
 
-        // time in ms that every bar widget takes to open/close
-        readonly property int widgets_animations: 600
-
+        readonly property int height: 50 // how much space will Quickshell reserve for the bar.
+        readonly property int widgetsAnimations: 600 // time (in ms) that the bar animations will take.
+        // TODO: position config so you can move the bar to the bottom. That would be fun.
 
         // ---------- CLOCK WIDGET SETTINGS ----------
-        readonly property QtObject clock_widget: QtObject {
-            // by default, clock uses 12-hour format. if you want to use 24-hour, set this to false.
-            readonly property bool use_12hrs: true
+        readonly property QtObject clock: QtObject {
+            readonly property bool use12hrs: true // which format do you want the clock to show (turn off for 24hrs)
         }
     }
 }

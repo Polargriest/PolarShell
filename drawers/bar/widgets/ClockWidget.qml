@@ -38,7 +38,7 @@ Rectangle {
         visible: opacity > 0
 
         // we grab the time using the SystemTime servece. its saved in a singleton in services/Time.qml
-        text: Time.get_formatted_time(false)
+        text: Time.getFormattedTime(false)
         
         // styling
         color: Theme.colors.blue
@@ -65,7 +65,7 @@ Rectangle {
 
                 Text {
                     id: expanded_clock
-                    text: Time.get_formatted_time(true)
+                    text: Time.getFormattedTime(true)
 
                     // style
                     color: Theme.colors.blue
@@ -76,7 +76,7 @@ Rectangle {
 
                 Text {
                     id: expanded_date
-                    text: Time.get_formatted_date()
+                    text: Time.getFormattedDate()
 
                     // style
                     color: Theme.colors.text_color
@@ -95,7 +95,7 @@ Rectangle {
     }
 
     Loader {
-        id: expanded_loader
+        id: expandedLoader
 
         // keep this loaded while its open, or while its still closing.
         active: widget.isOpen || widget.Layout.preferredWidth > collapsed.implicitWidth
@@ -107,13 +107,13 @@ Rectangle {
     states: [
         State {
             name: "opened"
-            when: widget.isOpen && expanded_loader.status == Loader.Ready
+            when: widget.isOpen && expandedLoader.status == Loader.Ready
 
             PropertyChanges {
-                widget.Layout.preferredWidth: expanded_loader.item.implicitWidth
-                widget.Layout.preferredHeight: expanded_loader.item.implicitHeight
+                widget.Layout.preferredWidth: expandedLoader.item.implicitWidth
+                widget.Layout.preferredHeight: expandedLoader.item.implicitHeight
                 collapsed.opacity: 0
-                expanded_loader.opacity: 1
+                expandedLoader.opacity: 1
             }
         },
 
@@ -125,7 +125,7 @@ Rectangle {
                 widget.Layout.preferredWidth: collapsed.implicitWidth
                 widget.Layout.preferredHeight: collapsed.implicitHeight
                 collapsed.opacity: 1
-                expanded_loader.opacity: 0
+                expandedLoader.opacity: 0
             }
         }
     ]
@@ -135,8 +135,8 @@ Rectangle {
             from: "*"; to: "*";
 
             NumberAnimation {
-                properties: "widget.Layout.preferredWidth,widget.Layout.preferredHeight,collapsed.opacity,expanded_loader.opacity"
-                duration: Configs.bar.widgets_animations
+                properties: "widget.Layout.preferredWidth,widget.Layout.preferredHeight,collapsed.opacity,expandedLoader.opacity"
+                duration: Configs.bar.widgetsAnimations
                 easing.type: Easing.OutBack
             }
         }
