@@ -59,6 +59,7 @@ Variants {
             }
 
             // we will make as much regions as needed (i. e. for every opened panel)
+            // TODO: when a widget is open, clicking any part of the screen should close it.
             Variants {
                 id: regions
 
@@ -67,12 +68,10 @@ Variants {
                 Region {
                     required property Item modelData
 
-                    property var rect: win.contentItem.mapFromItem(modelData, 0, 0, modelData.width, modelData.height)
-
-                    x: rect.x
-                    y: rect.y
-                    width: rect.width
-                    height: rect.height
+                    x: modelData.x + modelData.parent.x + bar.x
+                    y: modelData.y + modelData.parent.y + bar.y
+                    width: modelData.width
+                    height: modelData.height
                     intersection: Intersection.Combine
                 }
             }
@@ -80,35 +79,6 @@ Variants {
             // ------- WIDGETS DE LOS DRAWERS -------
             Bar {
                 id: bar
-            }
-
-            Item {
-                anchors.fill: parent
-                z: 1000 // Ensure it's on top of everything
-                visible: false
-
-                MouseArea {
-                    id: debugMouse
-                    anchors.fill: parent
-                    hoverEnabled: true // Necessary to track position without clicking
-                }
-
-                Rectangle {
-                    x: debugMouse.mouseX + 15
-                    y: debugMouse.mouseY + 15
-                    width: 100
-                    height: 40
-                    color: "black"
-                    opacity: 0.7
-                    radius: 5
-
-                    Text {
-                        anchors.centerIn: parent
-                        color: "white"
-                        font.family: "JetBrains Mono NFP"
-                        text: `X: ${Math.round(debugMouse.mouseX)} Y: ${Math.round(debugMouse.mouseY)}`
-                    }
-                }
             }
         }
     }
