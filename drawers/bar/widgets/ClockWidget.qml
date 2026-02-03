@@ -2,105 +2,227 @@ import QtQuick
 import QtQuick.Layouts
 import qs.globals
 import qs.services
+import QtQuick.Controls
 
 // CLOCK WIDGET
 // when collapsed, it displays the time. When expanded, it also displays the date.
-// TODO: it must show a calendar as well.
 
-Rectangle {
+ColumnLayout {
     id: widget
+    spacing: 10
+    Layout.alignment: Qt.AlignTop
 
     property bool isOpen: false // whether if the clock is expanded or not.
 
-    // layour alignments so it can expand correctly
-    Layout.alignment: Qt.AlignTop
+    // ---------- PILL #1 : Time and date ----------
+    Rectangle {
+        id: timeAndDate
 
-    // appearence
-    color: Theme.colorWithAlpha(Theme.colors.bg, 0.6)
-    radius: 17
-    border.width: 2
-    border.color: Theme.colors.bg
-    clip: true // masks the overflowing components.
+        // layour alignments so it can expand correctly
+        Layout.alignment: Qt.AlignTop
+        Layout.preferredWidth: !widget.isOpen ? collapsed1.width : expandedLoader.width
+        Layout.preferredHeight: collapsed1.height
 
-    // ---------- CLICK LOGIC ----------
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
+        // appearence
+        color: Theme.colorWithAlpha(Theme.colors.bg, 0.6)
+        radius: 17
+        border.width: 2
+        border.color: Theme.colors.bg
+        clip: true // masks the overflowing components.
 
-        onClicked: {
-            widget.isOpen = !widget.isOpen;
+        // ---------- CLICK LOGIC ----------
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: {
+                // TODO: should also be closed with ESC
+                widget.isOpen = !widget.isOpen;
+            }
         }
-    }
 
-    // ---------- COLLAPSED VIEW ----------
-    Text {
-        id: collapsed
-        visible: opacity > 0
+        // ---------- COLLAPSED VIEW ----------
+        Text {
+            id: collapsed1
+            visible: opacity > 0
 
-        // we grab the time using the SystemTime servece. its saved in a singleton in services/Time.qml
-        text: Time.getFormattedTime(false)
-        
-        // styling
-        color: Theme.colors.blue
-        font.bold: true
-        font.pixelSize: 18
-        font.family: "JetBrains Mono NFP"
+            // we grab the time using the SystemTime servece. its saved in a singleton in services/Time.qml
+            text: Time.getFormattedTime(false)
+            
+            // styling
+            color: Theme.colors.blue
+            font.bold: true
+            font.pixelSize: 18
+            font.family: "JetBrains Mono NFP"
 
-        // layout and margins
-        anchors.centerIn: parent
-        topPadding: 5
-        bottomPadding: 5
-        rightPadding: 12
-        leftPadding: 12
-    }
+            // layout and margins
+            anchors.centerIn: parent
+            topPadding: 5
+            bottomPadding: 5
+            rightPadding: 12
+            leftPadding: 12
+        }
 
-    // ---------- EXPANDED VIEW ----------
-    Component {
-        id: expanded
+        // ---------- EXPANDED VIEW ----------
+        Component {
+            id: expandedComponent1
 
-        ColumnLayout {
+            ColumnLayout {
+                Layout.preferredWidth: expanded1.width
+                Layout.preferredHeight: expanded1.height
+                Layout.alignment: Qt.AlignTop
 
-            Column {
-                spacing: 1
+                Column {
+                    id: expanded1
+                    spacing: 1
 
-                Text {
-                    id: expanded_clock
-                    text: Time.getFormattedTime(true)
+                    Text {
+                        text: Time.getFormattedTime(true)
 
-                    // style
-                    color: Theme.colors.blue
-                    font.pixelSize: 34
-                    font.bold: true
-                    font.family: "JetBrains Mono NFP"
+                        // style
+                        color: Theme.colors.blue
+                        font.pixelSize: 34
+                        font.bold: true
+                        font.family: "JetBrains Mono NFP"
+                    }
+
+                    Text {
+                        text: Time.getFormattedDate()
+
+                        // style
+                        color: Theme.colors.secondaryText
+                        font.pixelSize: 18
+                        font.bold: true
+                        font.family: "JetBrains Mono NFP"
+                    }
+
+                    // we leave some margins so the pill looks less cluttered.
+                    Layout.topMargin: 25
+                    Layout.leftMargin: 12
+                    Layout.rightMargin: 50
+                    Layout.bottomMargin: 25
                 }
+            }
+        }
 
-                Text {
-                    id: expanded_date
-                    text: Time.getFormattedDate()
+        Loader {
+            id: expandedLoader
+            active: widget.isOpen || opacity > 0
+            opacity: widget.isOpen ? 1 : 0
+            sourceComponent: expandedComponent1
 
-                    // style
-                    color: Theme.colors.text_color
-                    font.pixelSize: 18
-                    font.bold: true
-                    font.family: "JetBrains Mono NFP"
-                }
-
-                // we leave some margins so the pill looks less cluttered.
-                Layout.topMargin: 25
-                Layout.leftMargin: 12
-                Layout.rightMargin: 50
-                Layout.bottomMargin: 25
+            Behavior on opacity {
+                NumberAnimation { duration: Configs.bar.widgetsAnimations }
             }
         }
     }
 
-    Loader {
-        id: expandedLoader
+    // ---------- PILL #2 : Calendar ----------
+    // TODO: this shouldn't be loaded always. Wrap it inside a loader.
+    Rectangle {
+        id: calendar
 
-        // keep this loaded while its open, or while its still closing.
-        active: widget.isOpen || widget.Layout.preferredWidth > collapsed.implicitWidth
+        Layout.alignment: Qt.AlignRight
 
-        sourceComponent: expanded
+        // appearence
+        color: Theme.colorWithAlpha(Theme.colors.bg, 0.6)
+        radius: 17
+        border.width: 2
+        border.color: Theme.colors.bg
+        clip: true // masks the overflowing components.
+
+        property int selectedDay: -1
+
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 15
+
+            // TODO: navigation between months using 1) buttons, 2) scroll bar
+
+            Text {
+                text: Qt.locale("en_US").monthName(grid.month, Locale.LongFormat) + " " + grid.year
+                color: Theme.colors.orange
+                font.bold: true
+                font.pixelSize: 28
+                font.family: "JetBrains Mono NFP"
+                Layout.bottomMargin: 10
+            }
+
+            DayOfWeekRow {
+                Layout.fillWidth: true
+                locale: grid.locale
+
+                delegate: Text {
+                    required property var model
+
+                    text: model.shortName
+                    color: Theme.colors.secondaryText
+                    font.family: "JetBrains Mono NFP"
+                    font.bold: true
+                    font.pixelSize: 16
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 2
+                radius: 10
+                color: Theme.colors.orange
+            }
+
+            MonthGrid {
+                id: grid
+                month: Calendar.February
+                year: 2026
+                locale: Qt.locale("en_US")
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                delegate: Rectangle {
+                    required property var model
+
+                    color: model.today ? Theme.colors.orange : (dayHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.2") : "#00000000")
+                    border.width: (calendar.selectedDay === model.day && grid.month === model.month) ? 1 : 0
+                    border.color: (calendar.selectedDay === model.day && grid.month === model.month) ? Theme.colors.orange : "#00000000"
+                    radius: 100
+
+                    Text {
+                        text: model.day
+                        color: model.today ? Theme.colors.bg : Theme.colors.primaryText
+                        opacity: model.month == grid.month ? 1 : 0.5
+                        font.family: "JetBrains Mono NFP"
+                        font.pixelSize: 16
+                        font.bold: model.today
+
+                        anchors.centerIn: parent
+                    }
+
+                    MouseArea {
+                        id: dayHitbox
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
+
+                        onClicked:{
+                            calendar.selectedDay = model.day
+
+                            grid.year = model.year
+                            grid.month = model.month
+                        }
+                    }
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 70
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // ---------- STATES & ANIMATIONS ----------
@@ -110,10 +232,13 @@ Rectangle {
             when: widget.isOpen && expandedLoader.status == Loader.Ready
 
             PropertyChanges {
-                widget.Layout.preferredWidth: expandedLoader.item.implicitWidth
-                widget.Layout.preferredHeight: expandedLoader.item.implicitHeight
-                collapsed.opacity: 0
-                expandedLoader.opacity: 1
+                timeAndDate.Layout.preferredWidth: expandedLoader.implicitWidth
+                timeAndDate.Layout.preferredHeight: expandedLoader.implicitHeight
+                collapsed1.opacity: 0
+
+                calendar.opacity: 1
+                calendar.Layout.preferredWidth: expandedLoader.implicitWidth
+                calendar.Layout.preferredHeight: 385
             }
         },
 
@@ -122,20 +247,21 @@ Rectangle {
             when: !widget.isOpen
 
             PropertyChanges {
-                widget.Layout.preferredWidth: collapsed.implicitWidth
-                widget.Layout.preferredHeight: collapsed.implicitHeight
-                collapsed.opacity: 1
-                expandedLoader.opacity: 0
+                timeAndDate.Layout.preferredWidth: collapsed1.implicitWidth
+                timeAndDate.Layout.preferredHeight: collapsed1.implicitHeight
+                collapsed1.opacity: 1
+
+                calendar.opacity: 0
+                calendar.Layout.preferredWidth: 0
+                calendar.Layout.preferredHeight: 0
             }
         }
     ]
 
     transitions: [
         Transition {
-            from: "*"; to: "*";
-
             NumberAnimation {
-                properties: "widget.Layout.preferredWidth,widget.Layout.preferredHeight,collapsed.opacity,expandedLoader.opacity"
+                properties: "timeAndDate.Layout.preferredWidth,timeAndDate.Layout.preferredHeight,collapsed1.opacity,expandedLoader1.opacity,calendar.Layout.preferredWidth,calendar.Layout.preferredHeight,calendar.opacity"
                 duration: Configs.bar.widgetsAnimations
                 easing.type: Easing.OutBack
             }
