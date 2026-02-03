@@ -131,21 +131,63 @@ ColumnLayout {
         border.color: Theme.colors.bg
         clip: true // masks the overflowing components.
 
-        property int selectedDay: -1
+        property date selectedDate: new Date()
 
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: 15
 
-            // TODO: navigation between months using 1) buttons, 2) scroll bar
-
-            Text {
-                text: Qt.locale("en_US").monthName(grid.month, Locale.LongFormat) + " " + grid.year
-                color: Theme.colors.orange
-                font.bold: true
-                font.pixelSize: 28
-                font.family: "JetBrains Mono NFP"
+            // TODO: navigation between months using scroll bar
+            RowLayout {
                 Layout.bottomMargin: 10
+
+                Text {
+                    text: "<"
+                    color: Theme.colors.primaryText
+                    font.bold: true
+                    font.pixelSize: 28
+                    font.family: "JetBrains Mono NFP"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: {
+                            let d = new Date(grid.year, grid.month - 1, 1);
+                            grid.month = d.getMonth();
+                            grid.year = d.getFullYear();
+                        }
+                    }
+                }
+
+                Text {
+                    text: Qt.locale("en_US").monthName(grid.month, Locale.LongFormat) + " " + grid.year
+                    color: Theme.colors.orange
+                    font.bold: true
+                    font.pixelSize: 28
+                    font.family: "JetBrains Mono NFP"
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.fillWidth: true
+                }
+
+                Text {
+                    text: ">"
+                    color: Theme.colors.primaryText
+                    font.bold: true
+                    font.pixelSize: 28
+                    font.family: "JetBrains Mono NFP"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: {
+                            let d = new Date(grid.year, grid.month + 1, 1);
+                            grid.month = d.getMonth();
+                            grid.year = d.getFullYear();
+                        }
+                    }
+                }
             }
 
             DayOfWeekRow {
@@ -186,8 +228,8 @@ ColumnLayout {
                     required property var model
 
                     color: model.today ? Theme.colors.orange : (dayHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.2") : "#00000000")
-                    border.width: (calendar.selectedDay === model.day && grid.month === model.month) ? 1 : 0
-                    border.color: (calendar.selectedDay === model.day && grid.month === model.month) ? Theme.colors.orange : "#00000000"
+                    border.width: (calendar.selectedDate.getTime() === model.date.getTime()) ? 1 : 0
+                    border.color: Theme.colors.orange
                     radius: 100
 
                     Text {
@@ -207,12 +249,7 @@ ColumnLayout {
                         cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
 
-                        onClicked:{
-                            calendar.selectedDay = model.day
-
-                            grid.year = model.year
-                            grid.month = model.month
-                        }
+                        onClicked: calendar.selectedDate = model.date
                     }
 
                     Behavior on color {
