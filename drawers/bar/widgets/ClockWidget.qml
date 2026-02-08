@@ -137,73 +137,106 @@ ColumnLayout {
 
         property date visibleMonth: new Date()
 
-        function monthDate(delta) {
-            return new Date(
-                visibleMonth.getFullYear(),
-                visibleMonth.getMonth() + delta,
-                1
-            );
-        }
-        function shiftMonth(delta) {
-            visibleMonth = monthDate(delta);
-        }
-
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: 15
 
-            // TODO: navigation between months using scroll bar
             RowLayout { // NAVIGATION PART OF THE CALENDAR. Displays month and arrows.
                 Layout.bottomMargin: 10
+                spacing: 20
 
-                Image { // up arrow (previous month)
-                    source: "file:assets/icons/up_arrow"
-                    sourceSize.width: 30
-                    
+                Rectangle { // down arrow (next month)
+                    width: 40
+                    height: 40
+                    radius: 100
+
+                    color: upHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.1") : "#00000000"
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100}
+                    }
+
+                    Image {
+                        anchors.centerIn: parent
+                        source: "file:assets/icons/up_arrow"
+                        sourceSize.width: 20
+                    }
 
                     MouseArea {
+                        id: upHitbox
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
 
                         onClicked: monthFlicker.flick(0, 2000)
                     }
                 }
 
-                Text { // selected month indicator
-                    text: {
-                        const lm =
-                            calendar.visibleMonth.getFullYear() * 12 +
-                            calendar.visibleMonth.getMonth() +
-                            monthFlicker.monthOffset + 1
-
-                        const year = Math.floor(lm / 12)
-                        const month = ((lm % 12) + 12) % 12
-
-                        return Qt.locale("en_US").monthName(month, Locale.LongFormat)
-                            + " " + year
-                    }
-                    color: Theme.colors.orange
-                    font.bold: true
-                    font.pixelSize: 28
-                    font.family: "JetBrains Mono NFP"
-                    horizontalAlignment: Text.AlignHCenter
+                Rectangle {
+                    color: monthFlicker.monthOffset == -1 ? "#00000000" : (monthNameHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.1") : "#00000000")
                     Layout.fillWidth: true
+                    implicitHeight: 40
+                    radius: 100
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100}
+                    }
+
+                    Text { // selected month indicator
+                    id: textMonth
+                        text: {
+                            const lm =
+                                calendar.visibleMonth.getFullYear() * 12 +
+                                calendar.visibleMonth.getMonth() +
+                                monthFlicker.monthOffset + 1
+
+                            const year = Math.floor(lm / 12)
+                            const month = ((lm % 12) + 12) % 12
+
+                            return Qt.locale(Configs.bar.clock.calendarLocalization).monthName(month, Locale.LongFormat)
+                                + " " + year
+                        }
+                        color: Theme.colors.orange
+                        font.bold: true
+                        font.pixelSize: 24
+                        font.family: "JetBrains Mono NFP"
+                        anchors.fill: parent
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                    }
 
                     MouseArea {
+                        id: monthNameHitbox
                         anchors.fill: parent
                         cursorShape: monthFlicker.monthOffset == -1 ? Qt.ArrowCursor : Qt.PointingHandCursor
+                        hoverEnabled: true
 
                         onClicked: monthFlicker.monthOffset = -1
                     }
                 }
 
-                Image { // down arrow (next month)
-                    source: "file:assets/icons/down_arrow"
-                    sourceSize.width: 30
+                Rectangle { // down arrow (next month)
+                    width: 40
+                    height: 40
+                    radius: 100
+
+                    color: downHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.1") : "#00000000"
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100}
+                    }
+
+                    Image {
+                        anchors.centerIn: parent
+                        source: "file:assets/icons/down_arrow"
+                        sourceSize.width: 20
+                    }
 
                     MouseArea {
+                        id: downHitbox
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
 
                         onClicked: monthFlicker.flick(0, -2000)
                     }
@@ -212,6 +245,7 @@ ColumnLayout {
 
             DayOfWeekRow { // DAY OF WEEK INDICATOR (Sun, Mon, Tue...)
                 Layout.fillWidth: true
+                locale: Qt.locale(Configs.bar.clock.calendarLocalization)
 
                 delegate: Text {
                     required property var model
@@ -301,6 +335,14 @@ ColumnLayout {
                         onStopped: {
                             monthFlicker.isSnapping = false
 
+                            const page = Math.round(monthFlicker.contentY / monthWrapper.pageHeight)
+                            monthFlicker.contentY = page * monthWrapper.pageHeight
+
+                            if (monthFlicker.contentY >= (monthFlicker.height*2 - 1)) {
+                                monthFlicker.contentY = monthFlicker.height
+                                monthFlicker.monthOffset++
+                            }
+
                             if (monthFlicker.contentY <= 1) {
                                 monthFlicker.contentY = monthFlicker.height
                                 monthFlicker.monthOffset--
@@ -315,8 +357,9 @@ ColumnLayout {
                         Repeater {
                             model: 3
 
-                            MonthGrid {
+                            MonthGrid {                                
                                 id: grid
+                                locale: Qt.locale(Configs.bar.clock.calendarLocalization)
 
                                 property int linearMonth: (
                                     calendar.visibleMonth.getFullYear() * 12 +
@@ -341,10 +384,14 @@ ColumnLayout {
                                         calendar.selectedDate.getDate() === model.day
                                     )
 
-                                    color: model.today ? Theme.colors.orange : (dayHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.2") : "#00000000")
+                                    color: model.today ? Theme.colors.orange : (dayHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, 0.1) : "#00000000")
                                     border.width: isSelected ? 1 : 0
                                     border.color: isSelected ? Theme.colors.orange : "#00000000"
                                     radius: 100
+
+                                    Behavior on color {
+                                        ColorAnimation { duration: 60}
+                                    }
                                     
                                     Text {
                                         text: model.day
@@ -364,8 +411,11 @@ ColumnLayout {
                                         hoverEnabled: true
 
                                         onClicked: {
-                                            // TODO: let change months by selecting a day from another month
-                                            calendar.selectedDate = model.date
+                                            if (calendar.selectedDate.getTime() === model.date.getTime()) {
+                                                calendar.selectedDate = new Date()
+                                            } else {
+                                                calendar.selectedDate = model.date
+                                            }
                                         }
                                     }
                                 }
@@ -384,13 +434,13 @@ ColumnLayout {
             when: widget.isOpen && expandedLoader.status == Loader.Ready
 
             PropertyChanges {
-                timeAndDate.Layout.preferredWidth: expandedLoader.implicitWidth
+                timeAndDate.Layout.preferredWidth: 380
                 timeAndDate.Layout.preferredHeight: expandedLoader.implicitHeight
                 collapsed1.opacity: 0
 
                 calendar.opacity: 1
-                calendar.Layout.preferredWidth: expandedLoader.implicitWidth
-                calendar.Layout.preferredHeight: 385
+                calendar.Layout.preferredWidth: 380
+                calendar.Layout.preferredHeight: 420
             }
         },
 

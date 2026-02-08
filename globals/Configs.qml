@@ -23,6 +23,7 @@ Singleton {
         // ---------- CLOCK WIDGET SETTINGS ----------
         readonly property QtObject clock: QtObject {
             readonly property bool use12hrs: true // which format do you want the clock to show (turn off for 24hrs)
+            readonly property string calendarLocalization: "en_US" // localization that will be use for the calendar pill.
         }
     }
 }
