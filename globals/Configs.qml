@@ -18,6 +18,7 @@ Singleton {
 
         readonly property int height: 50 // how much space will Quickshell reserve for the bar.
         readonly property int widgetsAnimations: 600 // time (in ms) that the bar animations will take.
+        readonly property int pillMargins: 15 // how many pixels should every pill have.
         // TODO: position config so you can move the bar to the bottom. That would be fun.
 
         // ---------- CLOCK WIDGET SETTINGS ----------

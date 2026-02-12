@@ -10,21 +10,22 @@ Rectangle {
 
     required property var widget
     required property WidgetPill leaderPill
+    property real componentHeight: 0
     required property Component contentComponent
     property bool expanded: false
 
-    Layout.preferredWidth: expanded && leaderPill.expandedItem ? leaderPill.expandedItem.implicitWidth : -1
-    Layout.preferredHeight: expanded ? implicitHeight : -1
+    implicitWidth: expanded && leaderPill.expandedItem ? leaderPill.expandedItem.implicitWidth : 0
+    implicitHeight: expanded ? contentLoader.item.implicitHeight + Configs.bar.pillMargins*2 : 0
 
     // layour alignments so it can expand correctly with animations.
     Layout.alignment: Qt.AlignTop
-    Behavior on Layout.preferredHeight {
+    Behavior on implicitWidth {
         NumberAnimation {
             duration: Configs.bar.widgetsAnimations
             easing.type: Easing.OutBack
         }
     }
-    Behavior on Layout.preferredWidth {
+    Behavior on implicitHeight {
         NumberAnimation {
             duration: Configs.bar.widgetsAnimations
             easing.type: Easing.OutBack
@@ -39,8 +40,10 @@ Rectangle {
     clip: true // masks the overflowing components.
 
     Loader {
-        id: expandedLoader
+        id: contentLoader
+
         anchors.fill: parent
+        anchors.margins: 15
 
         active: root.expanded || opacity > 0
         sourceComponent: root.contentComponent
@@ -48,7 +51,7 @@ Rectangle {
 
         Behavior on opacity {
             NumberAnimation {
-                duration: Configs.bar.widgetsAnimations / 5
+                duration: Configs.bar.widgetsAnimations / 3
             }
         }
     }

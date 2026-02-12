@@ -8,19 +8,18 @@ import qs.globals
 Pill {
     id: calendar
 
-    readonly property int monthPageHeight: 360
+    readonly property int monthPageHeight: 310
 
     Layout.alignment: Qt.AlignRight
-    implicitHeight: 418
 
     property date selectedDate: new Date()
     property date visibleMonth: new Date()
 
     contentComponent: ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: 15
+        implicitWidth: 500
 
         RowLayout { // NAVIGATION PART OF THE CALENDAR. Displays month and arrows.
+            Layout.fillWidth: true
             Layout.bottomMargin: 10
             spacing: 20
 
@@ -150,7 +149,7 @@ Pill {
         Item {
             id: monthWrapper
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            implicitHeight: calendar.monthPageHeight
             clip: true
 
             readonly property int pageCount: 3
@@ -158,6 +157,7 @@ Pill {
 
             Flickable {
                 id: monthFlicker
+                anchors.fill: parent
 
                 implicitWidth: parent.width
                 implicitHeight: parent.height
