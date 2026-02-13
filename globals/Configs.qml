@@ -25,6 +25,11 @@ Singleton {
         readonly property QtObject clock: QtObject {
             readonly property bool use12hrs: true // which format do you want the clock to show (turn off for 24hrs)
             readonly property string calendarLocalization: "en_US" // localization that will be use for the calendar pill.
+
+            readonly property var worldClockCities: [
+                { flag: "🇺🇸", name: "Hickory", utc: -5 },
+                { flag: "🇯🇵", name: "Tokyo", utc: 9 }
+            ] // cities you want world clock to show. Leave empty to hide this widget.
         }
     }
 }

@@ -25,6 +25,13 @@ Widget {
         }
     }
 
+    WorldClockPill {
+        expanded: widget.isOpen
+        widget: widget
+        leaderPill: leaderPill
+        visible: Configs.bar.clock.worldClockCities.length > 0
+    }
+
     CalendarPill {
         expanded: widget.isOpen
         widget: widget

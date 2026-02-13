@@ -8,7 +8,7 @@ import qs.globals
 Pill {
     id: calendar
 
-    readonly property int monthPageHeight: 310
+    readonly property int monthPageHeight: 305
 
     Layout.alignment: Qt.AlignRight
 
@@ -16,8 +16,6 @@ Pill {
     property date visibleMonth: new Date()
 
     contentComponent: ColumnLayout {
-        implicitWidth: 500
-
         RowLayout { // NAVIGATION PART OF THE CALENDAR. Displays month and arrows.
             Layout.fillWidth: true
             Layout.bottomMargin: 10
@@ -141,11 +139,12 @@ Pill {
 
         Rectangle { // divider line
             Layout.fillWidth: true
-            Layout.preferredHeight: 2
+            Layout.preferredHeight: 1
             radius: 10
             color: Theme.colors.orange
         }
 
+        // TODO: Refactorize this, because right now it's a JS and QML mess
         Item {
             id: monthWrapper
             Layout.fillWidth: true
