@@ -1,17 +1,138 @@
 import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import qs.globals
+import qs.services
 
-Text {
-    text: "Uhh yeah comming soon"
-    height: 100
-    width: 350
+Item {
+    property var slideHovered: slider.hovered
+    property var muteHovered: muteHitbox.containsMouse
 
-    color: Theme.colors.purple
-    font.bold: true
-    font.pixelSize: 18
-    font.family: "JetBrains Mono NFP"
+    implicitWidth: 385
+    implicitHeight: layout.implicitHeight + 40
 
-    anchors.centerIn: parent
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
+    ColumnLayout {
+        id: layout
+        spacing: 15
+
+        anchors.fill: parent
+        anchors.topMargin: 20
+        anchors.leftMargin: 18
+        anchors.rightMargin: 18
+        anchors.bottomMargin: 20
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 12
+
+            Text {
+                text: "Master"
+
+                color: Theme.colors.purple
+                font.bold: true
+                font.pixelSize: 24
+                font.family: "JetBrains Mono NFP"
+            }
+
+            Text {
+                text: !Audio.muted ? "is on " + (Audio.volume * 100).toFixed(0) + "%" : "is muted"
+
+                color: Theme.colors.primaryText
+                font.bold: true
+                font.pixelSize: 24
+                font.family: "JetBrains Mono NFP"
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 15
+
+            Rectangle {
+                radius: 100
+                Layout.preferredWidth: 38
+                Layout.preferredHeight: 38
+
+                color: (muteHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.1") : "#00000000")
+
+                Text {
+                    id: muteIcon
+                    visible: opacity > 0
+
+                    text: Audio.muted ? "" : ""
+                    
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    //styling
+                    color: Theme.colors.primaryText
+                    font.bold: true
+                    font.pixelSize: 24
+                    font.family: "JetBrains Mono NFP"
+                }
+
+                MouseArea {
+                    id: muteHitbox
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: Audio.toggleSinkMute()
+                }
+            }
+
+            Slider {
+                id: slider
+                Layout.fillWidth: true
+                Layout.preferredHeight: 30
+
+                value: Audio.volume
+                onMoved: Audio.setVolume(value)
+                hoverEnabled: true
+
+                background: Item {
+                    implicitHeight: 30
+                    width: slider.availableWidth
+                    height: implicitHeight
+
+                    Item {
+                        id: filled
+                        clip: true
+                        implicitHeight: 30
+                        width: slider.handle.x + slider.handle.width / 2
+
+                        Rectangle {
+                            implicitHeight: 30
+                            width: slider.width
+                            radius: 100
+                            color: Theme.colors.purple
+                        }
+                    }
+                    
+                    Rectangle {
+                        implicitHeight: 10
+                        width: parent.width - filled.width
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        radius: 100
+                        color: Theme.colors.primaryText
+                    }
+                }
+
+                handle: Rectangle {
+                    x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
+                    y: slider.topPadding + slider.availableHeight / 2 - height / 2
+                    implicitHeight: 30
+                    implicitWidth: 30
+                    radius: 100
+
+                    color: Theme.colors.primaryText
+                    border.width: 5
+                    border.color: Theme.colors.purple
+                }
+
+                wheelEnabled: true
+            }
+        }
+    }
 }
