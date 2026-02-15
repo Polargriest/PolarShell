@@ -31,5 +31,10 @@ Singleton {
                 { flag: "🇯🇵", name: "Tokyo", utc: 9 }
             ] // cities you want world clock to show. Leave empty to hide this widget.
         }
+
+        // ---------- VOLUME WIDGET SETTINGS ----------
+        readonly property QtObject audio: QtObject {
+            readonly property real audioIncrement: 0.01 // how much should audio increase/decrease when scrolled with wheel.
+        }
     }
 }

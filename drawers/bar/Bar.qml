@@ -15,7 +15,7 @@ RowLayout {
     spacing: 0
 
     // HACK: really bad, but I don't know how to do it i'm so sorry and this is the only idea i had :sob:
-    property var openedPanels: [clock1, clock2]
+    property var openedPanels: [clock, audio]
 
     // widgets a la izquierda
 
@@ -32,13 +32,14 @@ RowLayout {
         id: right_widgets
 
         Layout.alignment: Qt.AlignRight | Qt.AlignTop
+        layoutDirection: Qt.RightToLeft
         spacing: 10
 
         // ----- WIDGETS -----
 
         // TODO: only one widget should be able to be open at a time.
-        Widgets.ClockWidget { id: clock1 }
-        Widgets.ClockWidget { id: clock2 }
+        Widgets.ClockWidget { id: clock }
+        Widgets.AudioWidget { id: audio }
     }
     
 }

@@ -1,8 +1,5 @@
 import QtQuick
-import QtQuick.Layouts
 import qs.globals
-import qs.services
-import QtQuick.Controls
 import "clock"
 
 // CLOCK WIDGET

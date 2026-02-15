@@ -16,8 +16,4 @@ Text {
 
     // layout and margins
     anchors.centerIn: parent
-    topPadding: 5
-    bottomPadding: 5
-    rightPadding: 12
-    leftPadding: 12
 }

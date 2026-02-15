@@ -36,8 +36,8 @@ Rectangle {
     border.color: Theme.colors.bg
     clip: true // masks the overflowing components.
 
-    Layout.preferredWidth: expanded ? expandedLoader.implicitWidth : collapsedLoader.implicitWidth
-    Layout.preferredHeight: expanded ? expandedLoader.implicitHeight : collapsedLoader.implicitHeight
+    Layout.preferredWidth: expanded ? expandedLoader.implicitWidth : (collapsedLoader.implicitWidth + 24)
+    Layout.preferredHeight: expanded ? expandedLoader.implicitHeight : (collapsedLoader.implicitHeight + 10)
 
     Loader {
         id: collapsedLoader
