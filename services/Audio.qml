@@ -32,10 +32,16 @@ Singleton {
         (acc, node) => { // so, for every node...
             if (!node.isStream) { // if node is NOT an stream (meaning is not an application)
                 // it means it might be a sink or a source.
-                if (node.isSink) acc.sinks.push(node);
-                if (node.audio) acc.sources.push(node);
+                if (node.isSink) {
+                    acc.sinks.push(node);
+                } else if (node.audio) {
+                    acc.sources.push(node);
+                }
             } else if (node.isStream && node.audio) {
-                acc.streams.push(node)
+                // However, some stream nodes can also be Input type. We should also filter these.
+                if (node.properties["media.class"] !== "Stream/Input/Audio") {
+                    acc.streams.push(node);
+                }
             }
 
             return acc
@@ -51,7 +57,7 @@ Singleton {
     // however, by default, nodes do not update their values. So we need to explicitly say to Quickshell that we want
     // to track the properties of these nodes.
     PwObjectTracker {
-        objects: [...root.sources, ...root.sinks, ...root.streams]
+        objects: Pipewire.nodes.values
     }
 
     // now we expose every node type as a property
@@ -88,5 +94,26 @@ Singleton {
 
     function decreaseVolume(amount: real) {
         setVolume(volume - amount)
+    }
+
+    // ------------------------------------------
+
+    function getNodeMute(node: PwNode): bool {
+        if (node?.ready && node?.audio) { // we ALWAYS need to ask if our sinker is ready
+            return node.audio.muted
+        }
+    }
+
+    function toggleNodeMute(node: PwNode) {
+        if (node?.ready && node?.audio) { // we ALWAYS need to ask if our sinker is ready
+            node.audio.muted = !node.audio.muted
+        }
+    }
+
+    function setNodeVolume(node: PwNode, newVolume: real) {
+        if (node?.ready && node?.audio) { // we ALWAYS need to ask if our sinker is ready
+            node.audio.muted = false
+            node.audio.volume = Math.max(0, Math.min(1, newVolume))
+        }
     }
 }

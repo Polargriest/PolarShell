@@ -8,7 +8,7 @@ Item {
     property var slideHovered: slider.hovered
     property var muteHovered: muteHitbox.containsMouse
 
-    implicitWidth: 385
+    implicitWidth: 425
     implicitHeight: layout.implicitHeight + 40
 
     ColumnLayout {
@@ -28,7 +28,9 @@ Item {
             Text {
                 text: "Master"
 
-                color: Theme.colors.purple
+                color: !Audio.muted ? Theme.colors.purple : Theme.colors.red
+                Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
+
                 font.bold: true
                 font.pixelSize: 24
                 font.family: "JetBrains Mono NFP"
@@ -53,7 +55,7 @@ Item {
                 Layout.preferredWidth: 38
                 Layout.preferredHeight: 38
 
-                color: (muteHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.1") : "#00000000")
+                color: muteHitbox.containsMouse ? Theme.colorWithAlpha(Theme.colors.primaryText, "0.1") : "#00000000"
 
                 Text {
                     id: muteIcon
@@ -104,7 +106,9 @@ Item {
                             implicitHeight: 30
                             width: slider.width
                             radius: 100
-                            color: Theme.colors.purple
+
+                            color: !Audio.muted ? Theme.colors.purple : Theme.colors.red
+                            Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
                         }
                     }
                     
@@ -128,7 +132,9 @@ Item {
 
                     color: Theme.colors.primaryText
                     border.width: 5
-                    border.color: Theme.colors.purple
+
+                    border.color: !Audio.muted ? Theme.colors.purple : Theme.colors.red
+                    Behavior on border.color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
                 }
 
                 wheelEnabled: true

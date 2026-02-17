@@ -11,6 +11,14 @@ Singleton {
         readonly property int gapsOut: 15
     }
 
+    // ---------- SHELL CONFIGS ----------
+    readonly property QtObject shell: QtObject {
+        // if your applications have icons in your NerdFonts, you can add them here.
+        readonly property var appIcons: {
+            "Zen": "",
+        }
+    }
+
     // -------------------------------------------------------------------
 
     // ---------- BAR CONFIGS ----------

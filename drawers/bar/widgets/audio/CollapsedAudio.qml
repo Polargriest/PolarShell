@@ -27,10 +27,12 @@ RowLayout {
             text: (Audio.volume * 100).toFixed(0) + "%"
 
             //styling
-            color: Theme.colors.purple
+            color: !Audio.muted ? Theme.colors.purple : Theme.colors.red
             font.bold: true
             font.pixelSize: 18
             font.family: "JetBrains Mono NFP"
+
+            Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
         }
 
         Text {
@@ -39,10 +41,12 @@ RowLayout {
             text: Audio.muted ? "" : ""
 
             //styling
-            color: Theme.colors.purple
+            color: !Audio.muted ? Theme.colors.purple : Theme.colors.red
             font.bold: true
             font.pixelSize: 18
             font.family: "JetBrains Mono NFP"
+
+            Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
         }
     }
 }

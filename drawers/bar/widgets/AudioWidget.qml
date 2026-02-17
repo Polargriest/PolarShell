@@ -41,6 +41,7 @@ Widget {
             }
 
             onWheel: event => {
+                if (leaderPill.mouseInSlider || leaderPill.mouseInMute) event.accepted = false
                 if (widget.isOpen) return
 
                 if (event.angleDelta.y > 0) {
@@ -50,5 +51,10 @@ Widget {
                 }
             }
         }
+    }
+
+    MixerPill {
+        expanded: widget.isOpen
+        leaderPill: leaderPill
     }
 }

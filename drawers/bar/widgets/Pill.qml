@@ -8,7 +8,6 @@ import qs.globals
 Rectangle {
     id: root
 
-    required property var widget
     required property WidgetPill leaderPill
     property real componentHeight: 0
     required property Component contentComponent
