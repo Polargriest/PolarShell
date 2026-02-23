@@ -10,8 +10,6 @@ Pill {
 
     readonly property int monthPageHeight: 305
 
-    Layout.alignment: Qt.AlignRight
-
     property date selectedDate: new Date()
     property date visibleMonth: new Date()
 

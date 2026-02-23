@@ -19,6 +19,8 @@ Widget {
 
         property bool mouseInSlider: leaderPill.expandedItem ? leaderPill.expandedItem.slideHovered : false
         property bool mouseInMute: leaderPill.expandedItem ? leaderPill.expandedItem.muteHovered : false
+        property bool mouseInMicSlider: leaderPill.expandedItem ? leaderPill.expandedItem.slideMicHovered : false
+        property bool mouseInMicMute: leaderPill.expandedItem ? leaderPill.expandedItem.muteMicHovered : false
 
         MouseArea {
             id: hitbox
@@ -29,7 +31,7 @@ Widget {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
 
             onPressed: (event) => {
-                if (leaderPill.mouseInSlider || leaderPill.mouseInMute) event.accepted = false
+                if (leaderPill.mouseInSlider || leaderPill.mouseInMute || leaderPill.mouseInMicSlider || leaderPill.mouseInMicMute) event.accepted = false
             }
 
             onClicked: (event) => {
@@ -41,7 +43,7 @@ Widget {
             }
 
             onWheel: event => {
-                if (leaderPill.mouseInSlider || leaderPill.mouseInMute) event.accepted = false
+                if (leaderPill.mouseInSlider || leaderPill.mouseInMute || leaderPill.mouseInMicSlider || leaderPill.mouseInMicMute) event.accepted = false
                 if (widget.isOpen) return
 
                 if (event.angleDelta.y > 0) {
@@ -51,6 +53,11 @@ Widget {
                 }
             }
         }
+    }
+
+    OutputPill {
+        expanded: widget.isOpen
+        leaderPill: leaderPill
     }
 
     MixerPill {

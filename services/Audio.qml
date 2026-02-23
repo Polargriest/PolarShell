@@ -72,8 +72,20 @@ Singleton {
     // sink status
     readonly property bool muted: !!sink?.audio?.muted
     readonly property real volume: sink?.audio?.volume ?? 0
+    // source status
+    readonly property bool micMuted: !!source?.audio?.muted
+    readonly property real micVolume: source?.audio?.volume ?? 0
 
-    // ------------------------- UTILITY FUNCTIONS -------------------------
+    /////////////////////////// UTILITY FUNCTIONS /////////////////////////////
+
+    // SINK FUNCTIONS:
+    // These functions are utilities that changes behaviour on the default sink (the default output device)
+
+    function setDefaultSink(sink: PwNode) {
+        if (sink && sink?.ready) { // we ALWAYS need to ask if our sinker is ready
+            Pipewire.preferredDefaultAudioSink = sink
+        }
+    }
 
     function toggleSinkMute() {
         if (sink?.ready && sink?.audio) { // we ALWAYS need to ask if our sinker is ready
@@ -96,7 +108,8 @@ Singleton {
         setVolume(volume - amount)
     }
 
-    // ------------------------------------------
+    // NODE SPECIFIC FUNCTIONS:
+    // These functions changes behaviour on the specified node (like application-specific).
 
     function getNodeMute(node: PwNode): bool {
         if (node?.ready && node?.audio) { // we ALWAYS need to ask if our sinker is ready
@@ -114,6 +127,21 @@ Singleton {
         if (node?.ready && node?.audio) { // we ALWAYS need to ask if our sinker is ready
             node.audio.muted = false
             node.audio.volume = Math.max(0, Math.min(1, newVolume))
+        }
+    }
+
+    // ------------------------------------------
+
+    function toggleSourceMute() {
+        if (source?.ready && source?.audio) { // we ALWAYS need to ask if our source is ready
+            source.audio.muted = !source.audio.muted
+        }
+    }
+
+    function setSourceVolume(newVolume: real) {
+        if (source?.ready && source?.audio) { // we ALWAYS need to ask if our source is ready
+            source.audio.muted = false
+            source.audio.volume = Math.max(0, Math.min(1, newVolume))
         }
     }
 }

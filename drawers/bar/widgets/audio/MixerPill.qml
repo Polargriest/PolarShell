@@ -7,7 +7,6 @@ import ".."
 
 Pill {
     id: pill
-    Layout.alignment: Qt.AlignRight
 
     contentComponent: ColumnLayout {
 
@@ -65,7 +64,10 @@ Pill {
                             id: iconHitbox
                             anchors.fill: parent
                             hoverEnabled: true
-                            onClicked: Audio.toggleNodeMute(application.modelData)
+                            onClicked: {
+                                console.log("Application name: " + application.modelData.properties["application.name"])
+                                Audio.toggleNodeMute(application.modelData)
+                            }
                         }
                     }
 

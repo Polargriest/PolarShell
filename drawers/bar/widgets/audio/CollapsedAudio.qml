@@ -38,7 +38,7 @@ RowLayout {
         Text {
             visible: opacity > 0
 
-            text: Audio.muted ? "" : ""
+            text: Audio.micMuted ? "󰍭" : (Audio.muted ? "" : "")
 
             //styling
             color: !Audio.muted ? Theme.colors.purple : Theme.colors.red

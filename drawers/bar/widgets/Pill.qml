@@ -13,11 +13,11 @@ Rectangle {
     required property Component contentComponent
     property bool expanded: false
 
+    Layout.alignment: parent && parent.parent && parent.parent.alignment !== undefined ? parent.parent.alignment : Qt.AlignLeft
+
     implicitWidth: expanded && leaderPill.expandedItem ? leaderPill.expandedItem.implicitWidth : 0
     implicitHeight: expanded ? contentLoader.item.implicitHeight + Configs.bar.pillMargins*2 : 0
 
-    // layour alignments so it can expand correctly with animations.
-    Layout.alignment: Qt.AlignTop
     Behavior on implicitWidth {
         NumberAnimation {
             duration: Configs.bar.widgetsAnimations

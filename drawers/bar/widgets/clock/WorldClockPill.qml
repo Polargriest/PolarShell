@@ -5,8 +5,6 @@ import qs.services
 import ".."
 
 Pill {
-    Layout.alignment: Qt.AlignRight
-
     contentComponent: ColumnLayout {
         id: component
 

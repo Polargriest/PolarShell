@@ -14,8 +14,6 @@ Rectangle {
     property alias expandedItem: expandedLoader.item
     property bool expanded: false
 
-    // layour alignments so it can expand correctly
-    Layout.alignment: Qt.AlignTop
     Behavior on Layout.preferredHeight {
         NumberAnimation {
             duration: Configs.bar.widgetsAnimations
