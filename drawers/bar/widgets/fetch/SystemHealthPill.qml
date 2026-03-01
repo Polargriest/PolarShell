@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 import ".."
 import qs.globals
 import qs.services
@@ -28,7 +27,7 @@ Pill {
             Layout.bottomMargin: 10
             spacing: 10
 
-            property color cpuColor: SysInfo.cpuUsage >= Configs.bar.fetch.cpuUsageCritical ? Theme.colors.red : (SysInfo.cpuUsage >= Configs.bar.fetch.cpuUsageWarning ? Theme.colors.yellow : Theme.colors.green)
+            property color cpuColor: SysInfo.cpuStatus === "critical" ? Theme.colors.red : (SysInfo.cpuStatus === "warning" ? Theme.colors.yellow : Theme.colors.green)
             Behavior on cpuColor { ColorAnimation { duration: 500 } }
 
             Text {

@@ -1,5 +1,4 @@
 import Quickshell
-import Quickshell
 import QtQml
 import Quickshell.Io
 import QtQuick
@@ -21,11 +20,13 @@ Singleton {
     property var packageCount
     property var outdatedPackages
     property var packagePercentage: (100 * outdatedPackages / packageCount).toFixed(1)
+    property var packageStatus: packagePercentage >= Configs.bar.fetch.outdatedPackagesCritical ? "critical" : (packagePercentage >= Configs.bar.fetch.outdatedPackagesWarning ? "warning" : "ok")
 
     property string cpuName
     property var cpuUsage: 0
     property var lastCpuTotal: 0
     property var lastCpuIdle: 0
+    property var cpuStatus: cpuUsage >= Configs.bar.fetch.cpuUsageCritical ? "critical" : (cpuUsage >= Configs.bar.fetch.cpuUsageWarning ? "warning" : "ok")
 
     property string gpuName
     property var gpuUsage
@@ -35,12 +36,14 @@ Singleton {
     property var memoryUsed
     property string memoryUsedHuman: formatBytes(memoryUsed)
     property var memoryPercentege
+    property var memoryStatus: memoryPercentege >= Configs.bar.fetch.ramUsageCritical ? "critical" : (memoryPercentege >= Configs.bar.fetch.ramUsageWarning ? "warning" : "ok")
 
     property var diskUsed
     property string diskUsedHuman: formatBytes(diskUsed)
     property var diskTotal
     property string diskTotalHuman: formatBytes(diskTotal)
     property var diskPercentage
+    property var diskStatus: diskPercentage >= Configs.bar.fetch.duCritical ? "critical" : (diskPercentage >= Configs.bar.fetch.duWarning ? "warning" : "ok")
 
     FileView { // ----------------------------------- OS RELEASE (ex. 6.18.9-arch1-2)
         path: "/proc/sys/kernel/osrelease"
