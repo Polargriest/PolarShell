@@ -48,10 +48,23 @@ Singleton {
         // ---------- FETCH WIDGET SETTINGS ----------
         readonly property QtObject fetch: QtObject {
             readonly property real cpuUsageWarning: 60 // % of CPU usage where you want PolarShell to warn you.
-            readonly property real cpuUsageCritic: 90 // % of CPU usage where you want PolarShell to mark as critic.
+            readonly property real cpuUsageCritical: 90 // % of CPU usage where you want PolarShell to mark as critic.
+
+            readonly property real ramUsageWarning: 70 // % of RAM usage where you want PolarShell to warn you.
+            readonly property real ramUsageCritical: 85 // % of RAM usage where you want PolarShell to mark as critic.
+
+            readonly property real duWarning: 90 // % of disk usage where you want PolarShell to warn you.
+            readonly property real duCritical: 95 // % of disk usage where you want PolarShell to mark as critic.
+
+            // we can also warn you when you have lots of outdated packages. choose the thresholds.
+            readonly property real outdatedPackagesWarning: 30
+            readonly property real outdatedPackagesCritical: 60
 
             readonly property real usageUpdate: 2000 // in mms, how fast does usage statistics updates.
-                                                     // NOTE: This updates even if the widget is closed.
+                                                     // NOTE: This updates even if the widget is closed, so go easy.
+
+            // hides the github button, so you can stay with just with system options.
+            readonly property bool hideGitHubButton: true
         }
     }
 }

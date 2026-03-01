@@ -129,7 +129,7 @@ Singleton {
             property: "kernelStatus"
             // only assign the value when both have stopped being undefined
             value: {
-                console.log("Kernel: " + root.kernel + " | Installed Kernel: " + root.installedKernel + " | Latest Kernel: " + root.latestKernel)
+                //console.log("Kernel: " + root.kernel + " | Installed Kernel: " + root.installedKernel + " | Latest Kernel: " + root.latestKernel)
 
                 // first, we check if every variable has ended assignment.
                 if (root.kernel === undefined || root.installedKernel === undefined || root.latestKernel === undefined) {

@@ -1,5 +1,4 @@
 import QtQuick
-import qs.globals
 import "fetch"
 
 Widget {
@@ -20,6 +19,12 @@ Widget {
     }
 
     SystemHealthPill {
+        leaderPill: leaderPill
+        expanded: widget.isOpen
+    }
+
+    MoreOptionsPill {
+        widget: widget
         leaderPill: leaderPill
         expanded: widget.isOpen
     }

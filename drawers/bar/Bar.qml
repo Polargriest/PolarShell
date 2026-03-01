@@ -24,7 +24,7 @@ RowLayout {
         spacing: 10
 
         // ----- WIDGETS -----
-        
+        Widgets.FetchWidget { id: fetch }
     }
 
     // widgets a la derecha
@@ -39,7 +39,6 @@ RowLayout {
         // ----- WIDGETS -----
 
         // TODO: only one widget should be able to be open at a time.
-        Widgets.FetchWidget { id: fetch }
         Widgets.ClockWidget { id: clock }
         Widgets.AudioWidget { id: audio }
     }

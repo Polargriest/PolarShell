@@ -64,6 +64,7 @@ Pill {
                             id: iconHitbox
                             anchors.fill: parent
                             hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 console.log("Application name: " + application.modelData.properties["application.name"])
                                 Audio.toggleNodeMute(application.modelData)
