@@ -18,4 +18,9 @@ Widget {
             onClicked: widget.isOpen = !widget.isOpen
         }
     }
+
+    SystemHealthPill {
+        leaderPill: leaderPill
+        expanded: widget.isOpen
+    }
 }

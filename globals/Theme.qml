@@ -6,7 +6,8 @@ pragma Singleton
 Singleton {
     // un objeto con todos los colores que normalmente usa. Son los colores de Monokai.
     readonly property QtObject colors: QtObject {
-        readonly property color bg: "#2D2A2E" // gris
+        readonly property color bg: "#2D2A2E" // gray
+        readonly property color bgDark: "#232422" // dark gray
         readonly property color red: "#FF6188"
         readonly property color orange: "#FC9867"
         readonly property color yellow: "#FFD866"

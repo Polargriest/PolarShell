@@ -1,14 +1,17 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.globals
+import qs.services
 
 Item {
-    implicitWidth: layout.implicitWidth + 40
+    implicitWidth: 520
     implicitHeight: layout.implicitHeight + 40
 
     RowLayout {
         id: layout
         Layout.alignment: Qt.AlignTop
+
+        spacing: 10
 
         anchors.fill: parent
         anchors.topMargin: 20
@@ -56,7 +59,7 @@ Item {
             Rectangle { height: 20 } // --------------- divider rectangle ---------------
 
             Text {
-                text: "<b><font color='" + Theme.colors.yellow + "'>󰣇 Kernel:</font></b> Arch version"
+                text: "<b><font color='" + Theme.colors.yellow + "'>󰣇 Kernel:</font></b> " + SysInfo.kernel
                 horizontalAlignment: Text.AlignRight
 
                 // style
@@ -66,7 +69,7 @@ Item {
             }
 
             Text {
-                text: "<b><font color='" + Theme.colors.yellow + "'> Packages:</font></b> More than 1"
+                text: "<b><font color='" + Theme.colors.yellow + "'> Packages:</font></b> " + SysInfo.packageCount
                 horizontalAlignment: Text.AlignRight
 
                 // style
@@ -76,7 +79,7 @@ Item {
             }
 
             Text {
-                text: "<b><font color='" + Theme.colors.yellow + "'> Uptime:</font></b> 11 hours, 25 mins"
+                text: "<b><font color='" + Theme.colors.yellow + "'> Uptime:</font></b> " + SysInfo.uptime
                 horizontalAlignment: Text.AlignRight
 
                 // style
@@ -86,7 +89,7 @@ Item {
             }
 
             Text {
-                text: "<b><font color='" + Theme.colors.yellow + "'> DE:</font></b> hyprland i think"
+                text: "<b><font color='" + Theme.colors.yellow + "'> DE:</font></b> " + SysInfo.wm
                 horizontalAlignment: Text.AlignRight
 
                 // style

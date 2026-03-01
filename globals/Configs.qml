@@ -44,5 +44,14 @@ Singleton {
         readonly property QtObject audio: QtObject {
             readonly property real audioIncrement: 0.01 // how much should audio increase/decrease when scrolled with wheel.
         }
+
+        // ---------- FETCH WIDGET SETTINGS ----------
+        readonly property QtObject fetch: QtObject {
+            readonly property real cpuUsageWarning: 60 // % of CPU usage where you want PolarShell to warn you.
+            readonly property real cpuUsageCritic: 90 // % of CPU usage where you want PolarShell to mark as critic.
+
+            readonly property real usageUpdate: 2000 // in mms, how fast does usage statistics updates.
+                                                     // NOTE: This updates even if the widget is closed.
+        }
     }
 }
