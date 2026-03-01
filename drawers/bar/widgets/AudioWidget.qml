@@ -58,10 +58,14 @@ Widget {
     OutputPill {
         expanded: widget.isOpen
         leaderPill: leaderPill
+
+        visible: Audio.sinks.length > 1
     }
 
     MixerPill {
         expanded: widget.isOpen
         leaderPill: leaderPill
+
+        visible: Audio.streams.length > 0
     }
 }

@@ -20,6 +20,7 @@ Item {
         anchors.bottomMargin: 20
 
         Text {
+            // TODO: gif and image support here
             text: "🦝"
 
             // style

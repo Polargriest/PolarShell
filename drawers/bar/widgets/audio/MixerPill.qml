@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import qs.globals
 import qs.services
+import qs.components
 import ".."
 
 Pill {
@@ -86,62 +87,11 @@ Pill {
                             font.pixelSize: 16
                         }
 
-                        Slider {
-                            id: slider
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 20
+                        CustomSlider {
+                            bgColor: !Audio.getNodeMute(application.modelData) ? Theme.colors.green : Theme.colors.red
 
                             value: application.modelData.audio?.volume
                             onMoved: Audio.setNodeVolume(application.modelData, value)
-                            hoverEnabled: true
-
-                            background: Item {
-                                implicitHeight: 20
-                                width: slider.availableWidth
-                                height: implicitHeight
-
-                                Item {
-                                    id: filled
-                                    clip: true
-                                    implicitHeight: 20
-                                    width: slider.handle.x + slider.handle.width / 2
-
-                                    Rectangle {
-                                        implicitHeight: 20
-                                        width: slider.width
-                                        radius: 100
-
-                                        color: !Audio.getNodeMute(application.modelData) ? Theme.colors.green : Theme.colors.red
-                                        Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
-                                    }
-                                }
-                                
-                                Rectangle {
-                                    implicitHeight: 5
-                                    width: parent.width - filled.width
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-
-                                    radius: 100
-                                    color: Theme.colors.primaryText
-                                }
-                            }
-
-                            handle: Rectangle {
-                                x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
-                                y: slider.topPadding + slider.availableHeight / 2 - height / 2
-                                implicitHeight: 20
-                                implicitWidth: 20
-                                radius: 100
-
-                                color: Theme.colors.primaryText
-                                border.width: 3
-
-                                border.color: !Audio.getNodeMute(application.modelData) ? Theme.colors.green : Theme.colors.red
-                                Behavior on border.color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
-                            }
-
-                            wheelEnabled: true
                         }
                     }
                 }

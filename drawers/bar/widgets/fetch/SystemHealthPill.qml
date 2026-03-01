@@ -4,6 +4,7 @@ import QtQuick.Controls
 import ".."
 import qs.globals
 import qs.services
+import qs.components
 
 Pill {
     contentComponent: ColumnLayout {
@@ -36,55 +37,14 @@ Pill {
                 font.pixelSize: 18
                 font.family: "JetBrains Mono NFP"
                 clip: true
-
-                
             }
 
             RowLayout {
                 spacing: 15
 
-                Slider {
-                    id: slider
-                    enabled: false
-
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 35
-
+                StatBar {
                     value: SysInfo.cpuUsage / 100
-
-                    background: Rectangle {
-                        implicitHeight: 35
-                        width: slider.availableWidth
-                        radius: 7
-
-                        color: Theme.colorWithAlpha(Theme.colors.bgDark, "0.5")
-
-                        Rectangle {
-                            // This creates a 6px gap on all sides
-                            anchors {
-                                left: parent.left
-                                top: parent.top
-                                bottom: parent.bottom
-                                margins: 4 // This is your padding
-                            }
-
-                            width: (parent.width - (anchors.margins * 2)) * slider.visualPosition
-                            radius: 4
-
-                            anchors.right: undefined
-
-                            color: components.cpuColor
-
-                            Behavior on width {
-                                NumberAnimation {
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
-                        }
-                    }
-
-                    handle: Item {}
+                    bgColor: components.cpuColor
                 }
 
                 Text {
@@ -98,11 +58,11 @@ Pill {
                 }
             }
 
-            property color ramColor: SysInfo.memoryPercentege >= Configs.bar.fetch.ramUsageCritical ? Theme.colors.red : (SysInfo.memoryPercentege >= Configs.bar.fetch.ramUsageWarning ? Theme.colors.yellow : Theme.colors.green)
-            Behavior on ramColor { ColorAnimation { duration: 500 } }
+            property color memoryColor: SysInfo.memoryPercentege >= Configs.bar.fetch.ramUsageCritical ? Theme.colors.red : (SysInfo.memoryPercentege >= Configs.bar.fetch.ramUsageWarning ? Theme.colors.yellow : Theme.colors.green)
+            Behavior on memoryColor { ColorAnimation { duration: 500 } }
 
             Text {
-                text: "<b><font color='" + components.ramColor + "'> RAM:</font></b> " + SysInfo.memoryUsedHuman + " / " + SysInfo.memoryTotalHuman
+                text: "<b><font color='" + components.memoryColor + "'> RAM:</font></b> " + SysInfo.memoryUsedHuman + " / " + SysInfo.memoryTotalHuman
                 color: Theme.colors.primaryText
                 font.pixelSize: 18
                 font.family: "JetBrains Mono NFP"
@@ -114,48 +74,9 @@ Pill {
             RowLayout {
                 spacing: 15
 
-                Slider {
-                    id: ramSlider
-                    enabled: false
-
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 35
-
+                StatBar {
                     value: SysInfo.memoryPercentege / 100
-
-                    background: Rectangle {
-                        implicitHeight: 35
-                        width: ramSlider.availableWidth
-                        radius: 7
-
-                        color: Theme.colorWithAlpha(Theme.colors.bgDark, "0.5")
-
-                        Rectangle {
-                            // This creates a 6px gap on all sides
-                            anchors {
-                                left: parent.left
-                                top: parent.top
-                                bottom: parent.bottom
-                                margins: 4 // This is your padding
-                            }
-
-                            width: (parent.width - (anchors.margins * 2)) * ramSlider.visualPosition
-                            radius: 4
-
-                            anchors.right: undefined
-
-                            color: components.ramColor
-
-                            Behavior on width {
-                                NumberAnimation {
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
-                        }
-                    }
-
-                    handle: Item {}
+                    bgColor: components.memoryColor
                 }
 
                 Text {
@@ -169,11 +90,11 @@ Pill {
                 }
             }
 
-            property color duColor: SysInfo.diskPercentage >= Configs.bar.fetch.duCritical ? Theme.colors.red : (SysInfo.diskPercentage >= Configs.bar.fetch.duWarning ? Theme.colors.yellow : Theme.colors.green)
-            Behavior on duColor { ColorAnimation { duration: 500 } }
+            property color diskColor: SysInfo.diskPercentage >= Configs.bar.fetch.duCritical ? Theme.colors.red : (SysInfo.diskPercentage >= Configs.bar.fetch.duWarning ? Theme.colors.yellow : Theme.colors.green)
+            Behavior on diskColor { ColorAnimation { duration: 500 } }
 
             Text {
-                text: "<b><font color='" + components.duColor + "'>󰋊 Disk space:</font></b> " + SysInfo.diskUsedHuman + " / " + SysInfo.diskTotalHuman
+                text: "<b><font color='" + components.diskColor + "'>󰋊 Disk space:</font></b> " + SysInfo.diskUsedHuman + " / " + SysInfo.diskTotalHuman
                 color: Theme.colors.primaryText
                 font.pixelSize: 18
                 font.family: "JetBrains Mono NFP"
@@ -185,48 +106,9 @@ Pill {
             RowLayout {
                 spacing: 15
 
-                Slider {
-                    id: diskSlider
-                    enabled: false
-
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 35
-
+                StatBar {
                     value: SysInfo.diskPercentage / 100
-
-                    background: Rectangle {
-                        implicitHeight: 35
-                        width: diskSlider.availableWidth
-                        radius: 7
-
-                        color: Theme.colorWithAlpha(Theme.colors.bgDark, "0.5")
-
-                        Rectangle {
-                            // This creates a 6px gap on all sides
-                            anchors {
-                                left: parent.left
-                                top: parent.top
-                                bottom: parent.bottom
-                                margins: 4 // This is your padding
-                            }
-
-                            width: (parent.width - (anchors.margins * 2)) * diskSlider.visualPosition
-                            radius: 4
-
-                            anchors.right: undefined
-
-                            color: components.duColor
-
-                            Behavior on width {
-                                NumberAnimation {
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
-                        }
-                    }
-
-                    handle: Item {}
+                    bgColor: components.diskColor
                 }
 
                 Text {
@@ -285,7 +167,7 @@ Pill {
                     if (SysInfo.outdatedPackages === undefined) {
                         return icon + "Calculating outdated packages..."
                     } else {
-                        return icon + "You have <b><font color='" + components.packagesColor + "'>" + SysInfo.outdatedPackages + "</font></b> outdated packages (" + SysInfo.packagePercentage + "%)"
+                        return icon + "You have <b><font color='" + components.packagesColor + "'>" + SysInfo.outdatedPackages + "</font></b> outdated package" + (SysInfo.outdatedPackages === 1 ? "" : "s") + " (" + SysInfo.packagePercentage + "%)"
                     }
                 }
                 color: Theme.colors.primaryText

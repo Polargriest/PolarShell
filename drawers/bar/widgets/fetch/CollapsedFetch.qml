@@ -4,6 +4,7 @@ import qs.globals
 Text {
     visible: opacity > 0
 
+    // TODO: get an insight of how is the system doing with icons in the collapsed view
     text: "󰣇"
     
     // styling

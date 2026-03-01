@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import qs.globals
 import qs.services
+import qs.components
 
 Item {
     property var slideHovered: slider.hovered
@@ -84,62 +85,12 @@ Item {
                 }
             }
 
-            Slider {
+            CustomSlider {
                 id: slider
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
+                bgColor: !Audio.muted ? Theme.colors.purple : Theme.colors.red
 
                 value: Audio.volume
                 onMoved: Audio.setVolume(value)
-                hoverEnabled: true
-
-                background: Item {
-                    implicitHeight: 30
-                    width: slider.availableWidth
-                    height: implicitHeight
-
-                    Item {
-                        id: filled
-                        clip: true
-                        implicitHeight: 30
-                        width: slider.handle.x + slider.handle.width / 2
-
-                        Rectangle {
-                            implicitHeight: 30
-                            width: slider.width
-                            radius: 100
-
-                            color: !Audio.muted ? Theme.colors.purple : Theme.colors.red
-                            Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
-                        }
-                    }
-                    
-                    Rectangle {
-                        implicitHeight: 10
-                        width: parent.width - filled.width
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        radius: 100
-                        color: Theme.colors.primaryText
-                    }
-                }
-
-                handle: Rectangle {
-                    x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
-                    y: slider.topPadding + slider.availableHeight / 2 - height / 2
-                    implicitHeight: 30
-                    implicitWidth: 30
-                    radius: 100
-
-                    color: Theme.colors.primaryText
-                    border.width: 5
-
-                    border.color: !Audio.muted ? Theme.colors.purple : Theme.colors.red
-                    Behavior on border.color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
-                }
-
-                wheelEnabled: true
             }
         }
 
@@ -204,62 +155,12 @@ Item {
                 }
             }
 
-            Slider {
+            CustomSlider {
                 id: sliderMic
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
+                bgColor: !Audio.micMuted ? Theme.colors.purple : Theme.colors.red
 
                 value: Audio.micVolume
                 onMoved: Audio.setSourceVolume(value)
-                hoverEnabled: true
-
-                background: Item {
-                    implicitHeight: 30
-                    width: slider.availableWidth
-                    height: implicitHeight
-
-                    Item {
-                        id: filledMic
-                        clip: true
-                        implicitHeight: 30
-                        width: sliderMic.handle.x + sliderMic.handle.width / 2
-
-                        Rectangle {
-                            implicitHeight: 30
-                            width: slider.width
-                            radius: 100
-
-                            color: !Audio.micMuted ? Theme.colors.purple : Theme.colors.red
-                            Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
-                        }
-                    }
-                    
-                    Rectangle {
-                        implicitHeight: 10
-                        width: parent.width - filledMic.width
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        radius: 100
-                        color: Theme.colors.primaryText
-                    }
-                }
-
-                handle: Rectangle {
-                    x: sliderMic.leftPadding + sliderMic.visualPosition * (sliderMic.availableWidth - width)
-                    y: sliderMic.topPadding + sliderMic.availableHeight / 2 - height / 2
-                    implicitHeight: 30
-                    implicitWidth: 30
-                    radius: 100
-
-                    color: Theme.colors.primaryText
-                    border.width: 5
-
-                    border.color: !Audio.micMuted ? Theme.colors.purple : Theme.colors.red
-                    Behavior on border.color { ColorAnimation { duration: Configs.bar.widgetsAnimations/3 } }
-                }
-
-                wheelEnabled: true
             }
         }
     }

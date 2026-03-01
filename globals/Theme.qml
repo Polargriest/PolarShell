@@ -24,4 +24,23 @@ Singleton {
     function colorWithAlpha(color, alpha) {
         return Qt.rgba(color.r, color.g, color.b, alpha)
     }
+
+    // oh i absolutely vibecoded this i'm sorry.
+    function multiplyColor(baseColor, factor) {
+        // factor: 1.0 es original, > 1.0 es más oscuro
+        // En lugar de ir hacia el negro (#000000), 
+        // desplazamos el color hacia un tono más frío y saturado
+        
+        let h = baseColor.hsvHue;
+        let s = Math.min(1.0, baseColor.hsvSaturation * (factor * 1.1)); // Aumenta saturación
+        let v = baseColor.hsvValue / factor; // Baja el brillo
+        
+        // El truco de Krita: Shift de tono (Hue Shift)
+        // Los oscuros se ven más vibrantes si viran un poco al azul/púrpura
+        let hShift = h;
+        if (h > 0.5) hShift += 0.02; // Si es azulado, hazlo más profundo
+        else hShift -= 0.02;        // Si es cálido, hazlo más "quemado"
+
+        return Qt.hsva(hShift, s, v, baseColor.a);
+    }
 }
