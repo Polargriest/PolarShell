@@ -15,20 +15,20 @@ RowLayout {
     spacing: 0
 
     // HACK: really bad, but I don't know how to do it i'm so sorry and this is the only idea i had :sob:
-    property var openedPanels: [fetch, clock, audio]
+    property var openedPanels: [fetch, clock, audio, workspaces]
 
     // widgets a la izquierda
-
     RowLayout {
         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
         spacing: 10
 
         // ----- WIDGETS -----
         Widgets.FetchWidget { id: fetch }
+        Widgets.Workspaces { id: workspaces }
+        
     }
 
     // widgets a la derecha
-
     RowLayout {
         id: right_widgets
 

@@ -30,10 +30,15 @@ Pill {
                     ColorAnimation { duration: 100}
                 }
 
-                Image {
-                    anchors.centerIn: parent
-                    source: "file:assets/icons/up_arrow"
-                    sourceSize.width: 20
+                Text { // up arrow
+                    text: ""
+                    color: Theme.colors.secondaryText
+                    font.bold: true
+                    font.pixelSize: 36
+                    font.family: "JetBrains Mono NFP"
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                 }
 
                 MouseArea {
@@ -57,7 +62,7 @@ Pill {
                 }
 
                 Text { // selected month indicator
-                id: textMonth
+                    id: textMonth
                     text: {
                         const lm =
                             calendar.visibleMonth.getFullYear() * 12 +
@@ -100,10 +105,15 @@ Pill {
                     ColorAnimation { duration: 100}
                 }
 
-                Image {
-                    anchors.centerIn: parent
-                    source: "file:assets/icons/down_arrow"
-                    sourceSize.width: 20
+                Text { // down arrow
+                    text: ""
+                    color: Theme.colors.secondaryText
+                    font.bold: true
+                    font.pixelSize: 36
+                    font.family: "JetBrains Mono NFP"
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                 }
 
                 MouseArea {

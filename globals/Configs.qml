@@ -17,6 +17,14 @@ Singleton {
         readonly property var appIcons: {
             "Zen": "",
         }
+
+        // change your shell style with other popular themes! Add your own ones or modify them on the Theme.qml
+        // file. Initially, it supports the following values:
+
+        // Theme.monokai: https://monokai.pro/
+        // Theme.catpuccin: https://catppuccin.com/palette/ (Mocha)
+        // Theme.synthwave84: https://marketplace.visualstudio.com/items?itemName=RobbOwen.synthwave-vscode
+        readonly property QtObject theme: Theme.monokai
     }
 
     // -------------------------------------------------------------------

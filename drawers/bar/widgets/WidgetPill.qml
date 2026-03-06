@@ -14,6 +14,9 @@ Rectangle {
     property alias expandedItem: expandedLoader.item
     property bool expanded: false
 
+    property real marginVertical: 5
+    property real marginHorizontal: 12
+
     Behavior on Layout.preferredHeight {
         NumberAnimation {
             duration: Configs.bar.widgetsAnimations
@@ -34,8 +37,8 @@ Rectangle {
     border.color: Theme.colors.bg
     clip: true // masks the overflowing components.
 
-    Layout.preferredWidth: expanded ? expandedLoader.implicitWidth : (collapsedLoader.implicitWidth + 24)
-    Layout.preferredHeight: expanded ? expandedLoader.implicitHeight : (collapsedLoader.implicitHeight + 10)
+    Layout.preferredWidth: expanded ? expandedLoader.implicitWidth : (collapsedLoader.implicitWidth + marginHorizontal*2)
+    Layout.preferredHeight: expanded ? expandedLoader.implicitHeight : (collapsedLoader.implicitHeight + marginVertical*2)
 
     Loader {
         id: collapsedLoader
