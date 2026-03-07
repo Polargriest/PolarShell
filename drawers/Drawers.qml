@@ -40,7 +40,7 @@ Variants {
             // a region that covers the whole bar.
             mask: Region {
                 width: win.width
-                height: bar.height
+                height: Configs.bar.height + Configs.screen.gapsOut
 
                 // also, the widgets on the bar sometimes opens panels. We need to add them to the mask to make them
                 // clickable.
@@ -82,10 +82,6 @@ Variants {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                
-                anchors.topMargin: Configs.screen.gapsOut
-                anchors.leftMargin: Configs.screen.gapsOut
-                anchors.rightMargin: Configs.screen.gapsOut
 
                 Bar { id: bar }
             }

@@ -4,6 +4,7 @@ import QtQuick
 ColumnLayout {
     id: root
     spacing: 10
+    Layout.preferredHeight: childrenRect.height
     Layout.alignment: alignment // so it can expand downwards.
 
     property bool isOpen: false // whether if the clock is expanded or not.

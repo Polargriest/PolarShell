@@ -15,8 +15,27 @@ Singleton {
     readonly property QtObject shell: QtObject {
         // if your applications have icons in your NerdFonts, you can add them here.
         readonly property var appIcons: {
-            "Zen": "",
+            "krita": "",
+            "steam": "",
+            "zen": "",
+            "obsidian": "",
+            "sober": "",
+            "code": "󰨞",
+            "ONLYOFFICE": "󰏆",
+            "discord": "",
+            "org.kde.dolphin": "",
+            "kitty": "",
+            "hyprland-share-picker": "",
+            "scrcpy": ""
         }
+
+        readonly property var appRewrites: ({
+            "(.*) — Zen Browser": "$1",
+            "(.*) - Visual Studio Code": "$1",
+            "(.*) - Discord": "$1",
+            "hyprland-share-picker": "Select screen to share",
+            "modrinth-app-wrapped": "Modrinth"
+        })
 
         // change your shell style with other popular themes! Add your own ones or modify them on the Theme.qml
         // file. Initially, it supports the following values:
@@ -36,6 +55,8 @@ Singleton {
         readonly property int widgetsAnimations: 600 // time (in ms) that the bar animations will take.
         readonly property int pillMargins: 15 // how many pixels should every pill have.
         // TODO: position config so you can move the bar to the bottom. That would be fun.
+        readonly property int titleMargins: 13
+        readonly property int titleCurveStrength: 15
 
         // ---------- CLOCK WIDGET SETTINGS ----------
         readonly property QtObject clock: QtObject {
