@@ -13,29 +13,58 @@ Singleton {
 
     // ---------- SHELL CONFIGS ----------
     readonly property QtObject shell: QtObject {
-        // if your applications have icons in your NerdFonts, you can add them here.
-        readonly property var appIcons: {
-            "krita": "",
-            "steam": "",
-            "zen": "",
-            "obsidian": "",
-            "sober": "",
-            "code": "󰨞",
-            "ONLYOFFICE": "󰏆",
-            "discord": "",
-            "org.kde.dolphin": "",
-            "kitty": "",
-            "hyprland-share-picker": "",
-            "scrcpy": ""
+        // if you want to format your own apps icons and titles, change this option! Here we include a small
+        // tutorial on how to add your own apps.
+        readonly property var appFormats: {
+            // "app-class": {
+            //     "title regex": {     // can also be "_" for a catch-all // these are checked from top to bottom.
+            //         "icon": "X",
+            //         "title": "Window Title"   // it will replace the title regex, so you can use $1, $2...
+            //     }
+            // }
+
+            // plain apps: just renames and icons
+            "steam": { "(.*)": { "icon": "", "title": "$1" } },
+            "hyprland-share-picker": { "(.*)": { "icon": "", "title": "Select screen to share" } },
+            "modrinth-app-wrapped": { "(.*)": { "icon": "[M]", "title": "$1" } },
+            "org.vinegarhq.Sober": { "(.*)": { "icon": "", "title": "$1" } },
+            "sober": { "(.*)": { "icon": "", "title": "$1" } },
+            "krita": { "(.*)": { "icon": "", "title": "$1" } },
+            "ONLYOFFICE": { "(.*)": { "icon": "󰏆", "title": "$1" } },
+
+            // simple renames: probably just to remove a dash
+            "code": { "(.*) - Visual Studio Code": { "icon": "󰨞", "title": "$1" }, "(.*)": { "icon": "󰨞", "title": "$1" } },
+            "discord": { "(.*) - Discord": { "icon": "", "title": "$1" } },
+            "org.kde.dolphin": { "(.*) — Dolphin": { "icon": "", "title": "$1" } },
+            "dotnet": { "Terraria: (.*)": { "icon": "󰔱", "title": "Terraria: $1" } },
+
+            // heavy renames: behaves different depending on title
+            "zen": {
+                "(.*) WhatsApp — Zen Browser": { "icon": "<font color='" + Theme.colors.green + "''></font>", "title": "WhatsApp $1" },
+                "(.*) - Google Search — Zen Browser": { "icon": "<font color='" + Theme.colors.blue + "''></font>", "title": "<i>\"$1\"</i>" },
+                "(.*) - YouTube — Zen Browser": { "icon": "<font color='" + Theme.colors.red + "''></font>", "title": "$1" },
+                "(.*) — Zen Browser": { "icon": "", "title": "$1" },
+                "_": { "icon": "" }
+            },
+
+            "kitty": {
+                "scrcpy": { "icon": "", "title": "scrcpy" },
+                "(.*)": { "icon": "", "title": "$1" }
+            },
+
+            "obsidian": {
+                "(.*) - (.*) - Obsidian (.*)": { "icon": "", "title": "$1" },
+                "(.*)": { "icon": "", "title": "$1" }
+            },
+
+
+            "_": { "show": false } // if we really can't determine where you are, this is the default.
         }
 
-        readonly property var appRewrites: ({
-            "(.*) — Zen Browser": "$1",
-            "(.*) - Visual Studio Code": "$1",
-            "(.*) - Discord": "$1",
-            "hyprland-share-picker": "Select screen to share",
-            "modrinth-app-wrapped": "Modrinth"
-        })
+        // if your applications have icons in your NerdFonts, you can add them here.
+        readonly property var appIcons: {
+            "ONLYOFFICE": "󰏆",
+        }
 
         // change your shell style with other popular themes! Add your own ones or modify them on the Theme.qml
         // file. Initially, it supports the following values:
@@ -55,8 +84,13 @@ Singleton {
         readonly property int widgetsAnimations: 600 // time (in ms) that the bar animations will take.
         readonly property int pillMargins: 15 // how many pixels should every pill have.
         // TODO: position config so you can move the bar to the bottom. That would be fun.
-        readonly property int titleMargins: 13
-        readonly property int titleCurveStrength: 15
+
+        // ---------- TITLE SETTINGS ----------
+        readonly property QtObject title: QtObject {
+            readonly property int curveDistance: 13 // how far from the actual window title will the notch start curving.
+            readonly property int curveSmoothness: 15 // indicates how smooth do you want the notch curves to be.
+            readonly property int distanceFromTop: 5 // how much space does you want the top rectangle to take.
+        }
 
         // ---------- CLOCK WIDGET SETTINGS ----------
         readonly property QtObject clock: QtObject {

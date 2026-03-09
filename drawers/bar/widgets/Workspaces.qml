@@ -60,7 +60,7 @@ Widget {
                         anchors.fill: parent
                         cursorShape: !workspace.modelData.focused ? Qt.PointingHandCursor : Qt.ArrowCursor
                         hoverEnabled: true
-                        onClicked: {workspace.modelData.activate(); console.log(workspace.modelData.name)}
+                        onClicked: {workspace.modelData.activate()}
                     }
                 }
             }

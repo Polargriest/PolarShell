@@ -1,5 +1,4 @@
 import QtQuick
-import Quickshell
 import QtQuick.Layouts
 import qs.globals
 import "widgets" as Widgets
@@ -35,8 +34,8 @@ Item {
         // left widgets
         RowLayout {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.leftMargin: Configs.screen.gapsOut
-            Layout.topMargin: 5
+            Layout.leftMargin: Configs.screen.gapsOut / 2
+            Layout.topMargin: Configs.bar.title.distanceFromTop/2
             spacing: 10
 
             // ----- WIDGETS -----
@@ -50,8 +49,8 @@ Item {
             id: rightWidgets
 
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            Layout.topMargin: 5
-            Layout.rightMargin: Configs.screen.gapsOut
+            Layout.topMargin: Configs.bar.title.distanceFromTop/2
+            Layout.rightMargin: Configs.screen.gapsOut / 2
             layoutDirection: Qt.RightToLeft
             spacing: 10
 

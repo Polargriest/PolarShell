@@ -45,7 +45,7 @@ Item {
             }
 
             Text {
-                text: "Alpha Version 1"
+                text: "Alpha InDev 1"
                 horizontalAlignment: Text.AlignRight
 
                 font.italic: true
