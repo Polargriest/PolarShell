@@ -87,9 +87,11 @@ Singleton {
 
         // ---------- TITLE SETTINGS ----------
         readonly property QtObject title: QtObject {
-            readonly property int curveDistance: 13 // how far from the actual window title will the notch start curving.
-            readonly property int curveSmoothness: 15 // indicates how smooth do you want the notch curves to be.
-            readonly property int distanceFromTop: 5 // how much space does you want the top rectangle to take.
+            readonly property real curveDistance: 13 // how far from the actual window title will the notch start curving.
+            readonly property real curveSmoothness: 15 // indicates how smooth do you want the notch curves to be.
+            readonly property real distanceFromTop: 5 // how much space does you want the top rectangle to take.
+            readonly property real minWidth: 300 // if the space available is less than this, the title will hide. 
+            readonly property real marginsBetweenWidgets: 50 // space that title will leave between widgets
         }
 
         // ---------- CLOCK WIDGET SETTINGS ----------
