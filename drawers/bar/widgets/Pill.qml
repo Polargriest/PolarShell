@@ -32,7 +32,7 @@ Rectangle {
     }
 
     // appearence
-    color: Theme.colorWithAlpha(Theme.colors.bg, 0.6)
+    color: Theme.colorWithAlpha(Theme.colors.bg, Theme.colors.transparency)
     radius: 17
     border.width: 2
     border.color: Theme.colors.bg

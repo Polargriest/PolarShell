@@ -21,7 +21,7 @@ Item {
 
         ShapePath {
             id: path
-            fillColor: Theme.colorWithAlpha(Theme.colors.bg, 0.6)
+            fillColor: Theme.colorWithAlpha(Theme.colors.bg, Theme.colors.transparency)
             strokeColor: Theme.colors.bg
             strokeWidth: 2
 

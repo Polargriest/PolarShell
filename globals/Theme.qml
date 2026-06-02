@@ -20,6 +20,9 @@ Singleton {
         // text colors
         readonly property color primaryText: "#F8F8F2"
         readonly property color secondaryText: "#B9B9B8"
+
+        // other configurations
+        readonly property double transparency: 0.6
     }
 
     readonly property QtObject catppuccin: QtObject {
@@ -35,6 +38,9 @@ Singleton {
         // text colors
         readonly property color primaryText: "#ccd5f4"
         readonly property color secondaryText: "#9298b1"
+
+        // other configurations
+        readonly property double transparency: 0.6
     }
 
     readonly property QtObject synthwave84: QtObject {
@@ -50,6 +56,45 @@ Singleton {
         // text colors
         readonly property color primaryText: "#d1d0d2"
         readonly property color secondaryText: "#616067"
+
+        // other configurations
+        readonly property double transparency: 0.6
+    }
+
+    readonly property QtObject dracula: QtObject {
+        readonly property color bg: "#282a36" // gray
+        readonly property color bgDark: "#43475a" // dark gray
+        readonly property color red: "#ff5555"
+        readonly property color orange: "#ffb86c"
+        readonly property color yellow: "#f1fa8c"
+        readonly property color green: "#50fa7b"
+        readonly property color blue: "#bd92f9"
+        readonly property color purple: "#ff79c6"
+
+        // text colors
+        readonly property color primaryText: "#f8f8f2"
+        readonly property color secondaryText: "#a9b8bd"
+
+        // other configurations
+        readonly property double transparency: 0.6
+    }
+
+    readonly property QtObject gruvbox: QtObject {
+        readonly property color bg: "#292828" // gray
+        readonly property color bgDark: "#292828" // dark gray
+        readonly property color red: "#ea6962"
+        readonly property color orange: "#e78a4e"
+        readonly property color yellow: "#d8a657"
+        readonly property color green: "#a9b665"
+        readonly property color blue: "#458588"
+        readonly property color purple: "#d3869b"
+
+        // text colors
+        readonly property color primaryText: "#d4be98"
+        readonly property color secondaryText: "#928374"
+
+        // other configurations
+        readonly property double transparency: 0.8
     }
 
     // esta función devuelve uno de los colores del objeto colors con una opacidad definida

@@ -72,6 +72,8 @@ Singleton {
         // Theme.monokai: https://monokai.pro/
         // Theme.catpuccin: https://catppuccin.com/palette/ (Mocha)
         // Theme.synthwave84: https://marketplace.visualstudio.com/items?itemName=RobbOwen.synthwave-vscode
+        // Theme.dracula: https://github.com/dracula/dracula-theme
+        // Theme.gruvbox: https://github.com/morhetz/gruvbox
         readonly property QtObject theme: Theme.monokai
     }
 
