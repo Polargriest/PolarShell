@@ -32,4 +32,4 @@ Widget {
         expanded: widget.isOpen
         leaderPill: leaderPill
     }
-}
+} 

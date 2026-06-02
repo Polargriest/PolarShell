@@ -1,6 +1,5 @@
 import Quickshell
 import "drawers"
-import "services"
 
 /*
     /!\ WARNING

@@ -40,7 +40,7 @@ Widget {
                     Behavior on color { ColorAnimation { duration: 250 } }
 
                     Text {
-                        text: workspace.modelData.id
+                        text: workspace.modelData.id == -98 ? "" : workspace.modelData.id
                         
                         // styling
                         color: workspace.modelData.focused ? Theme.colors.bg : Theme.colors.primaryText

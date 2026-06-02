@@ -11,6 +11,7 @@ Item {
     anchors.fill: parent
 
     property bool debugging: false
+    property bool isOpen: false
 
     required property real freeSpace
     required property real leftWidgetsSpace

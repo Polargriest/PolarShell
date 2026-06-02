@@ -15,6 +15,14 @@ Item {
     // HACK: really bad, but I don't know how to do it i'm so sorry and this is the only idea i had :sob:
     // this list is accessed by Drawers.qml to create clickable regions for opened widgets.
     property var openedPanels: [fetch, clock, audio, workspaces, title]
+    property var anyPanelOpened: openedPanels.some(panel => panel.isOpen)
+
+    // Rectangle {
+    //     anchors.fill: parent
+    //     color: "transparent"
+    //     border.color: "red"
+    //     border.width: 2
+    // }
 
     RowLayout {
         id: widgets
@@ -33,8 +41,8 @@ Item {
             id: leftWidgets
 
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.leftMargin: Configs.screen.gapsOut / 2
-            Layout.topMargin: Configs.bar.title.distanceFromTop/2
+            Layout.leftMargin: Configs.screen.gapsOut / (Configs.bar.title.style === "Notch" ? 2 : 1)
+            Layout.topMargin: (Configs.bar.title.style === "Notch" ? Configs.bar.title.distanceFromTop / 2 : 0)
             spacing: 10
 
             // ----- WIDGETS -----
@@ -48,8 +56,8 @@ Item {
             id: rightWidgets
 
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            Layout.topMargin: Configs.bar.title.distanceFromTop/2
-            Layout.rightMargin: Configs.screen.gapsOut / 2
+            Layout.topMargin: (Configs.bar.title.style === "Notch" ? Configs.bar.title.distanceFromTop / 2 : 0)
+            Layout.rightMargin: Configs.screen.gapsOut / (Configs.bar.title.style === "Notch" ? 2 : 1)
             layoutDirection: Qt.RightToLeft
             spacing: 10
 

@@ -31,6 +31,7 @@ Singleton {
             "sober": { "(.*)": { "icon": "", "title": "$1" } },
             "krita": { "(.*)": { "icon": "", "title": "$1" } },
             "ONLYOFFICE": { "(.*)": { "icon": "󰏆", "title": "$1" } },
+            "jetbrains-studio": { "(.*)": { "icon": "󰀴", "title": "$1" } },
 
             // simple renames: probably just to remove a dash
             "code": { "(.*) - Visual Studio Code": { "icon": "󰨞", "title": "$1" }, "(.*)": { "icon": "󰨞", "title": "$1" } },
@@ -43,6 +44,7 @@ Singleton {
                 "(.*) WhatsApp — Zen Browser": { "icon": "<font color='" + Theme.colors.green + "''></font>", "title": "WhatsApp $1" },
                 "(.*) - Google Search — Zen Browser": { "icon": "<font color='" + Theme.colors.blue + "''></font>", "title": "<i>\"$1\"</i>" },
                 "(.*) - YouTube — Zen Browser": { "icon": "<font color='" + Theme.colors.red + "''></font>", "title": "$1" },
+                "(.*) - T3 Chat — Zen Browser": { "icon": "<font color='" + Theme.colors.purple + "''>󰭹</font>", "title": "$1" },
                 "(.*) — Zen Browser": { "icon": "", "title": "$1" },
                 "_": { "icon": "" }
             },
@@ -59,11 +61,6 @@ Singleton {
 
 
             "_": { "show": false } // if we really can't determine where you are, this is the default.
-        }
-
-        // if your applications have icons in your NerdFonts, you can add them here.
-        readonly property var appIcons: {
-            "ONLYOFFICE": "󰏆",
         }
 
         // change your shell style with other popular themes! Add your own ones or modify them on the Theme.qml
@@ -89,11 +86,17 @@ Singleton {
 
         // ---------- TITLE SETTINGS ----------
         readonly property QtObject title: QtObject {
+            // change the title pill style! Available options are "Notch", "Classic" and "Floating"
+            readonly property string style: "Notch"
+
+            // Configurations for EVERY stle
+            readonly property real marginsBetweenWidgets: 50 // space that title will leave between widgets
+
+            // Configurations for NOTCH stle
             readonly property real curveDistance: 13 // how far from the actual window title will the notch start curving.
             readonly property real curveSmoothness: 15 // indicates how smooth do you want the notch curves to be.
-            readonly property real distanceFromTop: 5 // how much space does you want the top rectangle to take.
+            readonly property real distanceFromTop: 7 // how much space does you want the top rectangle to take.
             readonly property real minWidth: 300 // if the space available is less than this, the title will hide. 
-            readonly property real marginsBetweenWidgets: 50 // space that title will leave between widgets
         }
 
         // ---------- CLOCK WIDGET SETTINGS ----------
@@ -102,8 +105,8 @@ Singleton {
             readonly property string calendarLocalization: "en_US" // localization that will be use for the calendar pill.
 
             readonly property var worldClockCities: [
-                { flag: "🇺🇸", name: "Hickory", utc: -5 },
-                { flag: "🇯🇵", name: "Tokyo", utc: 9 }
+                { flag: "🇺🇸", name: "Hickory", utc: -4 },
+                { flag: "🌐", name: "UTC", utc: 0 },
             ] // cities you want world clock to show. Leave empty to hide this widget.
         }
 

@@ -3,6 +3,8 @@ import QtQuick
 import qs.globals
 import "bar"
 
+pragma ComponentBehavior: Bound
+
 // queremos crear un Drawer para cada monitor. Para ello usaremos Variants.
 // Variants lo que hará es crear una instancia de un componente la cantidad de veces que le digamos.
 //
@@ -38,13 +40,9 @@ Variants {
 
             // this solves the problem on the previous comment. This makes so the only clickable region is
             // a region that covers the whole bar.
-            mask: Region {
-                width: win.width
-                height: Configs.bar.height + Configs.screen.gapsOut
-
-                // also, the widgets on the bar sometimes opens panels. We need to add them to the mask to make them
-                // clickable.
-                regions: regions.instances
+            mask: Regions {
+                bar: bar
+                win: win
             }
 
             color: "transparent"
@@ -59,24 +57,6 @@ Variants {
                 screen: delegate.modelData
             }
 
-            // we will make as much regions as needed (i. e. for every opened panel)
-            // TODO: when a widget is open, clicking any part of the screen should close it.
-            Variants {
-                id: regions
-
-                model: bar.openedPanels
-
-                Region {
-                    required property Item modelData
-
-                    x: modelData.x + modelData.parent.x + bar.x
-                    y: modelData.y + modelData.parent.y + bar.y
-                    width: modelData.width
-                    height: modelData.height
-                    intersection: Intersection.Combine
-                }
-            }
-
             // ------- WIDGETS DE LOS DRAWERS -------
             Item {
                 anchors.top: parent.top
@@ -85,6 +65,18 @@ Variants {
 
                 Bar { id: bar }
             }
+
+            MouseArea {
+                anchors.fill: parent
+                z: -9999999
+                enabled: bar.anyPanelOpened
+                onClicked: bar.openedPanels.forEach(panel => panel.isOpen = false)
+            }
         }
     }
-}
+} 
+
+// notice how rn everything works let me save NO CHANGES just this comment
+// its all clicktroughable except the part that is on the exclude zone??
+// it works again
+// this is new
