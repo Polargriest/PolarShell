@@ -7,21 +7,25 @@ Item {
     height: text.height + 10
     width: text.width + 24
 
-    // TODO: If device doesn't support battery, don't show it.
-    Rectangle {
-        height: root.height
-        width: root.width * UPower.batteryPercentage
-        color: Theme.colorWithAlpha("#000000", 0)
-        clip: true
-
-        Rectangle {
+    Loader {
+        active: UPower.onBattery
+        sourceComponent: Rectangle {
             height: root.height
-            width: root.width
-            color: Theme.colorWithAlpha(Theme.colors.green, 0.2)
-            radius: 100
+            width: root.width * UPower.batteryPercentage + 10
+            color: Theme.colorWithAlpha("#000000", 0)
+            clip: true
 
-            border.width: 2
-            border.color: Theme.colors.bg
+            Component.onCompleted: console.log(UPower.batteryPercentage)
+
+            Rectangle {
+                height: root.height
+                width: root.width
+                color: Theme.colorWithAlpha(Theme.colors.green, 0.2)
+                radius: 100
+
+                border.width: 2
+                border.color: Theme.colors.bg
+            }
         }
     }
 
@@ -33,7 +37,9 @@ Item {
             let txt = ""
 
             // TODO: Options for percentage visibility
-            return UPower.batteryPercentage*100 + "%"
+            if (UPower.onBattery) {
+                return UPower.batteryPercentage*100 + "%"
+            }
             
             // CPU Usage
             if (SysInfo.cpuStatus === "warning") {
