@@ -119,6 +119,10 @@ Singleton {
         readonly property QtObject fetch: QtObject {
             // TODO: make fetch modules customizable
 
+            // ---------- BATTERY SETTINGS ----------
+            readonly property bool showPercentage: false // Toggle battery percentage or icons in fetch widget.
+            readonly property real fetchFixedWidth: 55 // widget width (0 for auto). Increase for better battery visibility.
+
             readonly property real cpuUsageWarning: 60 // % of CPU usage where you want PolarShell to warn you.
             readonly property real cpuUsageCritical: 90 // % of CPU usage where you want PolarShell to mark as critic.
 

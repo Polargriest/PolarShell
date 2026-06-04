@@ -5,7 +5,7 @@ import qs.services
 Item {
     id: root
     height: text.height + 10
-    width: text.width + 24
+    width: Configs.bar.fetch.fetchFixedWidth > 0 && UPower.onBattery ? Configs.bar.fetch.fetchFixedWidth : text.width + 24
 
     Loader {
         active: UPower.onBattery
@@ -18,7 +18,7 @@ Item {
             Rectangle {
                 height: root.height
                 width: root.width
-                color: Theme.colorWithAlpha(Theme.colors.green, 0.2)
+                color: Theme.colorWithAlpha(Theme.colors.secondaryText, 0.2)
                 radius: 100
 
                 border.width: 2
@@ -35,7 +35,7 @@ Item {
             let txt = ""
 
             // TODO: Options for percentage visibility
-            if (UPower.onBattery) {
+            if (UPower.onBattery && Configs.bar.fetch.showPercentage) {
                 return Math.round(UPower.batteryPercentage*100) + "%"
             }
             
