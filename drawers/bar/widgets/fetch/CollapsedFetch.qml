@@ -11,11 +11,9 @@ Item {
         active: UPower.onBattery
         sourceComponent: Rectangle {
             height: root.height
-            width: root.width * UPower.batteryPercentage + 10
+            width: root.width * UPower.batteryPercentage
             color: Theme.colorWithAlpha("#000000", 0)
             clip: true
-
-            Component.onCompleted: console.log(UPower.batteryPercentage)
 
             Rectangle {
                 height: root.height
@@ -38,7 +36,7 @@ Item {
 
             // TODO: Options for percentage visibility
             if (UPower.onBattery) {
-                return UPower.batteryPercentage*100 + "%"
+                return Math.round(UPower.batteryPercentage*100) + "%"
             }
             
             // CPU Usage
