@@ -121,7 +121,8 @@ Singleton {
 
             // ---------- BATTERY SETTINGS ----------
             readonly property bool showPercentage: false // Toggle battery percentage or icons in fetch widget.
-            readonly property real fetchFixedWidth: 55 // widget width (0 for auto). Increase for better battery visibility.
+            readonly property real fetchMinWidth: 50 // minimun width. Increase for better battery visibility.
+            readonly property real lowBattery: 20 // % of battery where you want to appear as red.
 
             readonly property real cpuUsageWarning: 60 // % of CPU usage where you want PolarShell to warn you.
             readonly property real cpuUsageCritical: 90 // % of CPU usage where you want PolarShell to mark as critic.

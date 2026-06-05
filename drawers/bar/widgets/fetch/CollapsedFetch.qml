@@ -5,7 +5,7 @@ import qs.services
 Item {
     id: root
     height: text.height + 10
-    width: Configs.bar.fetch.fetchFixedWidth > 0 && UPower.onBattery ? Configs.bar.fetch.fetchFixedWidth : text.width + 24
+    width: Math.max(Configs.bar.fetch.fetchMinWidth, text.width + 24)
 
     Loader {
         active: UPower.onBattery
@@ -18,11 +18,21 @@ Item {
             Rectangle {
                 height: root.height
                 width: root.width
-                color: Theme.colorWithAlpha(Theme.colors.secondaryText, 0.2)
                 radius: 100
+                color: {
+                    if (UPower.isCharging) { return Theme.colorWithAlpha(Theme.colors.green, 0.2) }
+
+                    if (UPower.batteryPercentage*100 > Configs.bar.fetch.lowBattery) {
+                        return Theme.colorWithAlpha(Theme.colors.secondaryText, 0.2)
+                    } else {
+                        return Theme.colorWithAlpha(Theme.colors.red, 0.2)
+                    }
+                }
 
                 border.width: 2
                 border.color: Theme.colors.bg
+
+                Behavior on color { ColorAnimation { duration: Configs.bar.widgetsAnimations/5 } }
             }
         }
     }
