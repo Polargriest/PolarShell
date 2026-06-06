@@ -8,6 +8,9 @@ Widget {
         id: leaderPill
         expanded: widget.isOpen
 
+        marginHorizontal: 0
+        marginVertical: 0
+
         collapsedView: CollapsedFetch {}
         expandedView: ExpandedFetch {}
 
