@@ -5,7 +5,7 @@ import qs.services
 Item {
     id: root
     height: text.height + 10
-    width: Math.max(Configs.bar.fetch.fetchMinWidth, text.width + 24)
+    width: UPower.onBattery ? Math.max(Configs.bar.fetch.fetchMinWidth, text.width + 24) : text.width + 24
 
     Loader {
         active: UPower.onBattery && Configs.bar.fetch.showProgressBar
