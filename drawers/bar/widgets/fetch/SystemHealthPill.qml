@@ -177,29 +177,38 @@ Pill {
                 clip: true
             }
 
-            Text {
-                property color batteryColor: (UPower.isCharging || UPower.batteryPercentage*100 > Configs.bar.fetch.lowBattery) ? Theme.colors.green : Theme.colors.red
-                Behavior on batteryColor { ColorAnimation { duration: 500 } }
+            Loader {
+                active: UPower.onBattery
+                sourceComponent: batteryText 
+            }
 
-                text: {
-                    let formattedRemaining = UPower.formatCountdown()
+            Component {
+                id: batteryText
 
-                    let txt = "<b><font color='" + batteryColor + "'> </font></b>"
-                    txt += UPower.isCharging ? "Charging at " : "Discharging at "
-                    txt += "<b><font color='" + batteryColor + "'>" + UPower.batteryPercentage*100 + "%</font></b> "
+                Text {
+                    property color batteryColor: (UPower.isCharging || UPower.batteryPercentage*100 > Configs.bar.fetch.lowBattery) ? Theme.colors.green : Theme.colors.red
+                    Behavior on batteryColor { ColorAnimation { duration: 500 } }
 
-                    if (!formattedRemaining) {
-                        return txt + "(Calculating...)"
+                    text: {
+                        let formattedRemaining = UPower.formatCountdown()
+
+                        let txt = "<b><font color='" + batteryColor + "'> </font></b>"
+                        txt += UPower.isCharging ? "Charging at " : "Discharging at "
+                        txt += "<b><font color='" + batteryColor + "'>" + UPower.batteryPercentage*100 + "%</font></b> "
+
+                        if (!formattedRemaining) {
+                            return txt + "(Calculating...)"
+                        }
+
+                        return txt + "(" + formattedRemaining + (UPower.isCharging ? " to full)" : " remains)")
                     }
+                    color: Theme.colors.primaryText
+                    font.pixelSize: 18
+                    font.family: "JetBrains Mono NFP"
 
-                    return txt + "(" + formattedRemaining + (UPower.isCharging ? " to full)" : " remains)")
+                    Layout.fillWidth: true
+                    clip: true
                 }
-                color: Theme.colors.primaryText
-                font.pixelSize: 18
-                font.family: "JetBrains Mono NFP"
-
-                Layout.fillWidth: true
-                clip: true
             }
         }
     }
