@@ -8,7 +8,7 @@ Item {
     width: Math.max(Configs.bar.fetch.fetchMinWidth, text.width + 24)
 
     Loader {
-        active: UPower.onBattery
+        active: UPower.onBattery && Configs.bar.fetch.showProgressBar
         sourceComponent: Rectangle {
             height: root.height
             width: root.width * UPower.batteryPercentage
@@ -22,10 +22,10 @@ Item {
                 color: {
                     if (UPower.isCharging) { return Theme.colorWithAlpha(Theme.colors.green, 0.2) }
 
-                    if (UPower.batteryPercentage*100 > Configs.bar.fetch.lowBattery) {
-                        return Theme.colorWithAlpha(Theme.colors.secondaryText, 0.2)
-                    } else {
+                    if (UPower.batteryPercentage*100 <= Configs.bar.fetch.lowBattery) {
                         return Theme.colorWithAlpha(Theme.colors.red, 0.2)
+                    } else {
+                        return Theme.colorWithAlpha(Theme.colors.secondaryText, 0.2)
                     }
                 }
 
@@ -43,10 +43,9 @@ Item {
 
         text: {
             let txt = ""
-
-            // TODO: Options for percentage visibility
+            
             if (UPower.onBattery && Configs.bar.fetch.showPercentage) {
-                return Math.round(UPower.batteryPercentage*100) + "%"
+                return Math.round(UPower.batteryPercentage*100) + (Configs.bar.fetch.showSymbol ? "%" : "")
             }
             
             // CPU Usage

@@ -119,29 +119,37 @@ Singleton {
         readonly property QtObject fetch: QtObject {
             // TODO: make fetch modules customizable
 
-            // ---------- BATTERY SETTINGS ----------
-            readonly property bool showPercentage: false // Toggle battery percentage or icons in fetch widget.
-            readonly property real fetchMinWidth: 50 // minimun width. Increase for better battery visibility.
-            readonly property real lowBattery: 20 // % of battery where you want to appear as red.
+            // hides the github button, so you can stay with just with system options.
+            readonly property bool hideGitHubButton: true
+            // minimun width. Increase for better battery progress bar visibility. It will never cut the icons.
+            readonly property real fetchMinWidth: 50
 
-            readonly property real cpuUsageWarning: 60 // % of CPU usage where you want PolarShell to warn you.
-            readonly property real cpuUsageCritical: 90 // % of CPU usage where you want PolarShell to mark as critic.
+            // PolarShell tracks your system health (CPU, RAM, disk, and packages). Even when closed, it'll alert
+            // you with icons if things look abnormal. Set your preferred warning and critical thresholds below!
 
-            readonly property real ramUsageWarning: 70 // % of RAM usage where you want PolarShell to warn you.
-            readonly property real ramUsageCritical: 85 // % of RAM usage where you want PolarShell to mark as critic.
+            readonly property real cpuUsageWarning: 60
+            readonly property real cpuUsageCritical: 90
 
-            readonly property real duWarning: 90 // % of disk usage where you want PolarShell to warn you.
-            readonly property real duCritical: 95 // % of disk usage where you want PolarShell to mark as critic.
+            readonly property real ramUsageWarning: 70
+            readonly property real ramUsageCritical: 85
 
-            // we can also warn you when you have lots of outdated packages. choose the thresholds.
+            readonly property real duWarning: 90
+            readonly property real duCritical: 95
+
             readonly property real outdatedPackagesWarning: 30
             readonly property real outdatedPackagesCritical: 60
 
-            readonly property real usageUpdate: 2000 // in mms, how fast does usage statistics updates.
-                                                     // NOTE: This updates even if the widget is closed, so go easy.
+            // in mms, how fast does usage statistics updates.
+            // NOTE: This updates even if the widget is closed, so go easy.
+            readonly property real usageUpdate: 2000
 
-            // hides the github button, so you can stay with just with system options.
-            readonly property bool hideGitHubButton: true
+            // ---------- BATTERY SETTINGS ----------
+            // Most of these options will only have effect if you are on battery.
+            readonly property bool showPercentage: false // Toggle battery percentage or icons in fetch widget.
+            readonly property bool showSymbol: true // Toggle the "%" after the battery percentage.
+            readonly property bool showProgressBar: true // Toggle background battery percentage bar in fetch widget.
+            readonly property real lowBattery: 20 // % of battery where you want to appear as red.
+
         }
     }
 }
