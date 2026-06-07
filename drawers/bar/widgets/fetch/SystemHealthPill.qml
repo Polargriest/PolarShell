@@ -179,6 +179,7 @@ Pill {
 
             Loader {
                 active: UPower.onBattery
+                visible: active
                 sourceComponent: batteryText 
             }
 
